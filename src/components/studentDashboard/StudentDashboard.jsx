@@ -7,14 +7,17 @@ import NewExam from './NewExam';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getSignInData } from '../../util/http';
+import Sidebar from './Sidebar';
+
+import menuIcon from "../studentDashboard/Icons/menu-icon.gif"
 
 export default function StudentDashboard(){
 
 		
 	const [questions, setQuestions] = useState([]);
-	
-	
 	const [start, setStart] = useState(false);
+	const [sidebarOpen,setSidebarOpen] = useState(false);
+
 	const navigate = useNavigate();
 
 	const {data} = useQuery({
@@ -119,33 +122,59 @@ export default function StudentDashboard(){
 	 }
 }
 
+	function toggleSidebar(){
+		setSidebarOpen(!sidebarOpen);
+	}
+
 
 	
 	return(
 
-		<div>
-			<header className='studentDiv'>
-			<div className='studentDivDetails'>
-				{/* <button onClick={handleNavigate}>Home</button> */}
-				{ !start && <button onClick={handleStartQuiz}>Start Quiz</button>}
-				{!start && <button onClick={handleStartLearn}>Chatbot learn</button>}	
-				<button>Check Recommendations</button>			
-			</div>
-			<div className='studentInfo'>
-					<img src={notificationLogo} alt='notification'/>
-				<h2>{data}</h2>		
-				<img src={profileLogo} alt="profile"/>		
-			</div>
-			
-		</header>
+	<div className='student-dashboard mt-0 '>
 		
-		{ start ? <NewExam questions={questions}/> : <NoExam/>}
+			<Sidebar 
+			sidebarOpen={sidebarOpen}
+			toggleSidebar={toggleSidebar} 
+			handleStartQuiz={handleStartQuiz}
+			handleStartLearn={handleStartLearn}
+			/>
+
+		<div  className={`transition-margin-left duration-300 ease-in-out mt-0 ${
+          sidebarOpen ? 'ml-64' : 'ml-0'
+       		 } p-4`}>
+
+			<header className={`transition-margin-left duration-300 flex flex-row justify-between items-center bg-gray-300 p-4 fixed top-0 right-0 ${sidebarOpen ? 'left-64 justify-end' : 'left-0'} `}>
+
+				{!sidebarOpen && (
+						<div
+						onClick={toggleSidebar}
+						className="bg-gray-400 hover:bg-blue-600 text-white font-bold p-1 rounded"
+						style={{ width: '30px', height: '30px' }}
+						>
+						<img src={menuIcon} alt="Menu" style={{ width: '20px', height: '20px' }} />
+						</div>
+					)}
+
+				<div className='studentInfo'>
+						<img src={notificationLogo} alt='notification'/>
+					<h2>{data}</h2>		
+					<img src={profileLogo} alt="profile"/>		
+				</div>
+			</header>
+			
+
+		<div className=" p-6 m-7 rounded-2xl flex justify-center items-center">
+			{ start ? <NewExam questions={questions}/> : <NoExam/>}
+
+		</div>
+		
 			
 			<div className='studentLogout'>
 				<button>Logout</button>
 			</div>
 			
 		</div>
+	</div>
 		
 	)
 }

@@ -1,12 +1,12 @@
 // eslint-disable-next-line react/prop-types
-export default function FormInput({label,id,type,name,placeholder,className,onChange,onBlur, value, error}){
+export default function FormInput({label,id,type,name,placeholder,onChange,onBlur, value, error }){
 	return(
 	
 		<div>
 			<label htmlFor={id}>{label} </label>
 			<input
 				id={id}
-				className={className}
+				className={`p-3 bg-transparent border border-gray-400 rounded w-full`}
 				placeholder={placeholder}
 				type={type}
 				name={name} 
