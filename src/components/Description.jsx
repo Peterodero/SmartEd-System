@@ -12,13 +12,16 @@ export default function Description(){
 	
 	return(
 		<main>
-			<div className="main">
+			<div className="main mb-8">
 				<img src={logo} alt="logo"/>
-				<h2>SmartEd</h2>
+				<h2 className="text-lg "><b>SmartEd</b></h2>
 			</div>
-			<h1>The best learning platform</h1>
-			<h2>Made for work designed to love</h2>
-			<p>You can proceed with get started to register in this admirable platform to do exams for free</p>
+			<div className="main2 p-3 text-lg">
+				<h1><b>The best learning platform</b></h1>
+				<h2><b>Made for work designed to love</b></h2>
+				<p>You can proceed with get started to register in this admirable platform to do exams for free</p>
+			
+			</div>
 			
 			<button onClick={navigateHandler}>Get Started </button>
 		</main>

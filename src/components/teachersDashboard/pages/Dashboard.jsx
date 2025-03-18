@@ -12,7 +12,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="relative h-screen bg-gray-250">
+    <div className="relative h-screen bg-gray-250"> 
       {/* Sidebar */}
       <Sider isOpen={isOpen} toggleSidebar={toggleSidebar} />
 

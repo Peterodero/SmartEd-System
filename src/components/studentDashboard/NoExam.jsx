@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 
 export default function NoExam(){
 	return(
-		<main className='noExamMain'>
-				<h1>You do not have any current exam ongoing</h1>
-				<p>Proceed to <Link>Upcoming Exam</Link> to view your next exams</p>
+		<main className='noExamMain text-xl'>
+				<h1 className="m-4"><b>No ongoing session</b></h1>
+				<p className="m-1">Click  to start learning   </p>
 				<h2>OR</h2>
-				<p>Proceed to <Link>Previos Exams</Link> to view your last exams</p>
-				<p>Click <Link to={'/'}>here</Link> to proceed to homepage</p>
+				<p>Proceed<Link> here</Link> to view your results</p>
+				<p className="m-1">Click <Link to={'/'}>here</Link> to proceed to homepage</p>
 		</main>
 	)
 }

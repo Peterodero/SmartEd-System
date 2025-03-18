@@ -57,11 +57,11 @@ export default function SignUp(){
 	 
 	 
 	return(
-		<div className="sign"> 
-			<h1>Welcome to SmartEd</h1>
-			<h2>Fill in the details to create an account</h2>
+		<div className="sign mt-2"> 
+			<h1><b>Welcome to SmartEd</b></h1>
+			<h2 className="mt-1.5 text-lg"><b>Fill in the details to create an account</b></h2>
 			
-			<form className="loginForm" onSubmit={handleSubmit}>
+			<form className="loginForm w-full mt-3" onSubmit={handleSubmit}>
 				
 				<FormInput 
 					type="email" 
@@ -109,10 +109,9 @@ export default function SignUp(){
 					<button type="submit" className="submit">Register</button>
 				</div>
 				
-				<p>Already have an account? <Link to="/signIn">Sign In</Link> Or Proceed <Link to="/">Home</Link></p>
-			
-				
 			</form>
+
+			<p className="mt-6">Already have an account? <Link to="/signIn">Sign In</Link> Or Proceed <Link to="/">Home</Link></p>
 		</div>
 	)
 }

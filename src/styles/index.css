@@ -6,23 +6,22 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important; 
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
 
-  /* color-scheme: light dark; */
-  color: rgba(14, 13, 13, 0.87);
-  background-color: #f7f3f3;
+  color: rgba(14, 13, 13, 0.87) !important;
+  background-color: #ece2e2 !important;
 
-  font-synthesis: none; 
-   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none !important; 
+   text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #5d65fa;
   text-decoration: inherit;
 }
 a:hover {
@@ -31,7 +30,6 @@ a:hover {
 
 body {
   margin: 0;
-  /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
 }

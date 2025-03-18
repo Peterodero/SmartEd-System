@@ -11,10 +11,10 @@ export default function Header(){
 	}
 	
 	return(
-		<header className="header">
+		<div className="header">
 			<div className="headerMain">
 				<img src={logo} alt="logo"/>
-				<h1>SmartEd</h1>
+				<h1 className="text-3xl"><b>SmartEd</b></h1>
 			</div>
 			
 			<div className="headerDiv">
@@ -22,6 +22,6 @@ export default function Header(){
 				<button onClick={()=>navigateHandler('/signUp')}>Sign Up</button>
 			</div>
 			
-		</header>
+		</div>
 	)
 }

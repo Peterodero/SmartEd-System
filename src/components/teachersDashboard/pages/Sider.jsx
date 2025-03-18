@@ -31,7 +31,7 @@ const Slider = ({ isOpen, toggleSidebar }) => {
           </div>
         </div>
 
-        <nav className='m-5 '> 
+        <nav className='m-5 '>  
           {/* Menu Items */}
           {[
             { name: 'Dashboard', path: '/dashboard' },

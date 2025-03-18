@@ -11,6 +11,7 @@ import Description from "./components/Description";
 import StudentDashboard from "./components/studentDashboard/StudentDashboard";
 import TeachersDashboard from "./components/teachersDashboard/TeachersDashboard";
 import Messages from "./components/teachersDashboard/pages/Messages";
+import ForgotPassword from "./components/ForgotPassword";
 
 
 function App() {
@@ -28,6 +29,10 @@ function App() {
     },
     {path: '/signIn',
       element:<Login/>
+    },
+    {
+      path:'/forgotPassword',
+      element:<ForgotPassword/>
     },
     
     {path: '/student',

@@ -50,17 +50,16 @@ export default function Login() {
 	}
 
 	return (
-		<div className="sign">
-			<h1>Hi, Welcome back to SmartEd</h1>
-			<h2>Login to Continue</h2>
-			<p>Please fill in your details to log in</p>
-			<form className="loginForm" onSubmit={handleSubmitLogin}>
+		<div className="sign flex flex-column gap-2 mt-2">
+			<h1><b>Hi, Welcome back to SmartEd</b></h1>
+			{/* <h2 className="text-xl"><b>Login to Continue</b></h2> */}
+			<p className="text-lg"><b>Please fill in your details to log in!</b></p>
+			<form className='loginForm w-full' onSubmit={handleSubmitLogin}>
 
 				<FormInput
 					type="email"
 					name="email"
-					placeholder="Student/Employer email"
-					className="inputs"
+					placeholder="Student Email"
 					id="email"
 					label="Username:"
 					onChange={handleLoginChange}
@@ -73,7 +72,6 @@ export default function Login() {
 					type="password"
 					name="password"
 					placeholder="Password"
-					className="inputs"
 					id="password"
 					label="Password:"
 					onChange={handleLoginChange}
@@ -91,7 +89,7 @@ export default function Login() {
 
 
 			</form>
-
+			<Link to='/forgotPassword'>Forgot Password?</Link>
 			<p>Do not have an account?  <Link to='/signUp'> Sign Up</Link> Or Proceed <Link to="/">Home</Link></p>
 		</div>
 	)
