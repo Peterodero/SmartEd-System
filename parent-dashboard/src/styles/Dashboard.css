@@ -1,0 +1,130 @@
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 16px;
+  }
+  
+  .dashboard-container h1 {
+    margin-bottom: 24px;
+    color: #2c3e50;
+    text-align: center;
+  }
+  
+  .student-info {
+    margin-bottom: 32px;
+  }
+  
+  .info-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  
+  .info-card p {
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+    font-size: 1.1rem;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .dashboard-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+  }
+  
+  .dashboard-card h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+    color: #3498db;
+  }
+  
+  .notification-list, .event-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .notification-item, .event-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  
+  .notification-item:last-child, .event-item:last-child {
+    border-bottom: none;
+  }
+  
+  .notification-content, .event-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .notification-title, .event-title {
+    font-weight: 500;
+  }
+  
+  .notification-date, .event-date {
+    color: #718096;
+    font-size: 0.9rem;
+  }
+  
+  .quick-actions {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+  }
+  
+  .quick-actions h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+    color: #3498db;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .action-button {
+    display: block;
+    padding: 12px 24px;
+    background-color: #3498db;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    flex: 1;
+    min-width: 180px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  }
+  
+  .action-button:hover {
+    background-color: #2980b9;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+    }
+  }
