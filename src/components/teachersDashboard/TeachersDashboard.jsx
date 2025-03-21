@@ -1,41 +1,51 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import LandingPage from "./pages/LandingPage"
-import LoginPage from "./pages/LoginPage"
-import Dashboard from "./pages/Dashboard"
-import Events from "./pages/Events"
-import Subjects from "./pages/Subjects"
-import Exams from "./pages/Exams"
-import Messages from "./pages/Messages"
-import NoticeBoard from "./pages/NoticeBoard"
-import Classes from "./pages/Classes"
-import Routine from "./pages/Routine"
-import LiveClass from "./pages/DashboardMain"
-import Students from "./pages/Students"
+
+import { Outlet } from "react-router-dom";
+import Header from "../Header";
+import Sider from "./pages/Sider";
+import { useState } from "react";
+import menuIcon from "./Icons/menu-icon.gif"
+import notification from "../../assets/notification.png"
+import profile from "../../assets/profile.png"
 
 
 
 function TeachersDashboard() {
 
+  
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const toggleSidebar = () => {
+      setIsOpen(!isOpen);
+    };
+
   return (
-    // <Router>
-    // <Routes >
-    // <Route path ="/" element ={<LandingPage/>}/>
-    // <Route path = "/loginPage" element ={<LoginPage/>}/>
-    // <Route path = "/dashboard" element ={<Dashboard/>}/>
-    // <Route path = "/events" element ={<Events/>}/>
-    // <Route path = "/subjects" element ={<Subjects/>}/>
-    // <Route path = "/liveClass" element ={<LiveClass/>}/>
-    // <Route path = "/messages" element ={<Messages/>}/>
-    // <Route path = "/routine" element ={<Routine/>}/>
-    // <Route path = "/notice" element ={<NoticeBoard/>}/>
-    // <Route path = "/classes" element ={<Classes/>}/>
-    // <Route path = "/exams" element ={<Exams/>}/>
-    // <Route path = "/students" element ={<Students/>}/>
-    // </Routes>
-    // </Router>
+ 
 
     <>
-      <Dashboard/>
+        <Header/>
+            <Sider isOpen={isOpen} toggleSidebar={toggleSidebar} />
+          <header className={`transition-margin-left duration-300 flex flex-row justify-between items-center bg-gray-300 p-4 fixed top-0 right-0 ${isOpen ? 'left-64 justify-end' : 'left-0'} `}>
+        
+                {!isOpen && (
+                    <div
+                    onClick={toggleSidebar}
+                    className="bg-gray-400 hover:bg-blue-600 text-white font-bold p-1 rounded"
+                    style={{ width: '30px', height: '30px' }}
+                    >
+                    <img src={menuIcon} alt="Menu" style={{ width: '20px', height: '20px' }} />
+                    </div>
+                  )}
+        
+                <div className='studentInfo'>
+                    <img src={notification} alt='notification'/>
+                  <h2>Shaddy</h2>		
+                  <img src={profile} alt="profile"/>		
+                </div>
+            </header>
+      
+        <div className={`transition-margin-left duration-300 transition-all flex flex-col right-0 fixed ${isOpen ? ' left-64' : 'left-0'}`}>
+          <Outlet/>
+        </div>
     </>
   )
 }

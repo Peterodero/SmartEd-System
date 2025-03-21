@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Slider = ({ isOpen, toggleSidebar }) => {
+const Sider = ({ isOpen, toggleSidebar }) => {
   const [activeItem, setActiveItem] = useState(''); // Default active item
   const navigate = useNavigate();
 
@@ -34,16 +34,15 @@ const Slider = ({ isOpen, toggleSidebar }) => {
         <nav className='m-5 '>  
           {/* Menu Items */}
           {[
-            { name: 'Dashboard', path: '/dashboard' },
-            { name: 'Subjects', path: '/subjects' },
-            { name: 'Routine', path: '/routine' },
-            { name: 'Exams', path: '/exams' },
-            { name: 'Classes', path: '/classes' },
-            { name: 'Students', path: '/students' },
-            { name: 'Notice Board', path: '/notice' },
-            { name: 'Live Class', path: '/liveclass' },
-            { name: 'Events', path: '/events' },
-            { name: 'Log out', path: '/loginPage' },
+            { name: 'Dashboard', path: 'dashboard' },
+            { name: 'Subjects', path: 'subjects' },
+            { name: 'Routine', path: 'routine' },
+            { name: 'Exams', path: 'exams' },
+            { name: 'Classes', path: 'classes' },
+            { name: 'Students', path: 'students' },
+            { name: 'Notice Board', path: 'notice' },
+            { name: 'Events', path: 'events' },
+            { name: 'Log out', path: 'loginPage' },
           ].map((item) => (
             <div
               key={item.name}
@@ -68,4 +67,4 @@ const Slider = ({ isOpen, toggleSidebar }) => {
   );
 };
 
-export default Slider;
+export default Sider;

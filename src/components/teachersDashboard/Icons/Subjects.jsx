@@ -1,15 +1,34 @@
 import React, { useState } from 'react';
+import Sider from './Sider';
 
 const Subjects = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex">
-    
+      {/* Sidebar */}
+      <Sider isOpen={isOpen} toggleSidebar={toggleSidebar} />
+
+      {/* Main Content */}
       <div
-        className={`transition-margin-left duration-300 ease-in-out p-4`}
+        className={`transition-margin-left duration-300 ease-in-out ${
+          isOpen ? 'ml-64' : 'ml-0'
+        } p-4`}
       >
-       
+        {!isOpen && (
+          <button
+            onClick={toggleSidebar}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold p-1 rounded"
+            style={{ width: '30px', height: '30px' }}
+          >
+            <img src="src/icons/menu-icon.gif" alt="Menu" style={{ width: '20px', height: '20px' }} />
+          </button>
+        )}
+      </div>
 
       <main className='flex-1 p-8'>
         <header className='flex justify-between items-center mn-8 '>
@@ -93,7 +112,6 @@ const Subjects = () => {
           </ul>
         </div>
       </main>
-    </div>
     </div>
   );
 };
