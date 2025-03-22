@@ -1,11 +1,19 @@
-import React from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Navbar from './domain/Navbar';
+import Dashboard from './domain/Dashboard1';
+import StudentResults from './domain/StudentResults';
+import MessageTeacher from './domain/Talks';
+import './ParentDashboard.css';
 
-const ParentDashboard = () => {
+function ParentDashboard() {
+  
   return (
-    <div>
-        Welcome Parent
-    </div>
+    <>
+     <Navbar/>
+    <Dashboard/>
+
+  </>
   )
 }
 
-export default ParentDashboard
+export default ParentDashboard;
