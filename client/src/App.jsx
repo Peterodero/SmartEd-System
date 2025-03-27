@@ -23,6 +23,7 @@ import Description from "./components/Description";
 import StudentDashboard from "./components/studentDashboard/StudentDashboard";
 import TeachersDashboard from "./components/teachersDashboard/TeachersDashboard";
 import ForgotPassword from "./components/ForgotPassword";
+import Verification from "./components/Verification";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,6 +45,10 @@ function App() {
     {
       path: '/forgotPassword',
       element: <ForgotPassword />,
+    },
+    {
+      path: '/verification',
+      element : <Verification/>
     },
 
     {
