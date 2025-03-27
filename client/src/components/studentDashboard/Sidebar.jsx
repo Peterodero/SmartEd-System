@@ -6,13 +6,13 @@ export default function Sidebar({sidebarOpen, toggleSidebar, handleStartQuiz, ha
     return(
         <div  className={`flex flex-col  gap-4 fixed top-0 left-0 h-full text-white transition-all duration-300 ease-in-out ${
             sidebarOpen ? 'w-64' : 'w-0'
-          } overflow-x-hidden bg-gray-800`}>
+          } overflow-x-hidden bg-gray-600`}>
 
            <div className="flex flex-row">
               <main>
                     <div className="flex flex-col gap-1 p-1 mt-2">
                         <span className="text-sm font-semibold">Student</span>
-                        <span className="text-xs text-gray-400">Student Dashboard</span>
+                        <span className="text-xs text-gray-400">Student Dashboard</span>  
                     </div>
               </main>
                

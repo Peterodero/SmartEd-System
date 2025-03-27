@@ -117,7 +117,7 @@
   margin-top: 10px;
 }
 .newExamMain{
-  background-color: rgb(230, 229, 229);
+  background-color: rgb(202, 201, 201);
   text-align: center;
   margin-top: 10px;
   margin-left: 250px;
@@ -151,11 +151,6 @@
   margin-bottom: 30px;
 }
 
-
-.examinerDashboard{
-  display: flex;
-  flex-direction: row;
-}
 .sidebar{
   display: flex;
   flex-direction: column;
@@ -178,8 +173,28 @@
   flex-direction: column;
   margin-top: 10px;
 }
+/* .dialog{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
 
-.student-dashboard{
-  
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+dialog[open] {
+  animation: fadeIn 0.3s ease-out;
 }
 
