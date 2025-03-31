@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import { useState } from "react";
 
-import { isEmail, /*isNotEmpty,*/ hasMinLength } from '../util/validation.js';
+// import { isEmail, /*isNotEmpty,*/ hasMinLength } from '../util/validation.js';
 import useInput from "../hooks/useInput.js";
 import { useMutation } from "@tanstack/react-query";
 import { sendSignInData } from "../util/http.js";
@@ -10,43 +10,43 @@ import { sendSignInData } from "../util/http.js";
 
 export default function Login() {
 
-	const [content, setContent] = useState('');
-
 	const navigate = useNavigate();
 
 	const { mutate } = useMutation({
-		mutationFn: sendSignInData
+		mutationFn: sendSignInData,
+		onSuccess: (data) => {
+			localStorage.setItem("token", data.token);
+			navigate('/student');
+		  },
+		onError: (error) => {
+		console.error("failed to sign In", error);
+		// Handle errors (e.g., show a message)
+		}
 	})
 
-	const { handleChange: handleLoginChange, handleBlur: handleLoginBlur, formData, didEdit } = useInput({
-		email: "",
-		password: "",
-		setContent
-	},
-		{
-			email: false,
-			password: false
-		}
-	)
-
-	const emailIsInvalid = !isEmail(formData.email) && didEdit.email //isNotEmpty(formData.email)
-	const passwordIsInvalid = !hasMinLength(formData.password, 6) && didEdit.password;
+	const {  handleLoginChange,
+		  handleLoginBlur,
+		  loginFormData,
+		  loginEmailIsInvalid: emailIsInvalid ,
+		  loginPasswordIsInvalid: passwordIsInvalid,
+		   handleValidateSignIn,
+		   content } = useInput()
 
 	function handleSubmitLogin(event) {
 		event.preventDefault();
 
-		if (emailIsInvalid || passwordIsInvalid) {
-			setContent("Invalid login details")
-			return;
-		}
-		const trial = formData.email;
-		const trial2 = trial.split('@');
-		console.log(trial2[0]);
+		handleValidateSignIn()
 
-		mutate(formData)
-		console.log(formData)
+		const signInData = {
+			email: loginFormData.email,
+			password: loginFormData.password,
+		  };
 
-		navigate('/student');
+		console.log(signInData) 
+		mutate(signInData)
+
+		const haveAccount = sendSignInData();
+
 	}
 
 	return (
@@ -64,7 +64,7 @@ export default function Login() {
 					label="Username:"
 					onChange={handleLoginChange}
 					onBlur={() => handleLoginBlur('email')}
-					value={formData.email}
+					value={loginFormData.email}
 					error={emailIsInvalid && 'Please enter a valid email address'}
 				
 				/>
@@ -76,7 +76,7 @@ export default function Login() {
 					label="Password:"
 					onChange={handleLoginChange}
 					onBlur={() => handleLoginBlur('password')}
-					value={formData.password}
+					value={loginFormData.password}
 					error={passwordIsInvalid && 'Please enter a valid password'}
 				
 				/>
@@ -86,7 +86,6 @@ export default function Login() {
 				<div>
 					<button  className="submit">Sign In</button>
 				</div>
-
 
 			</form>
 			<Link to='/forgotPassword'>Forgot Password?</Link>

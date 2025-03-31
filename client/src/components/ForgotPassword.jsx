@@ -6,14 +6,11 @@ import Verification from "./Verification";
 
 export default function ForgotPassword(){
 
-    const [enteredEmail, setEnteredEmail] = useState(null);
+    const [enteredEmail, setEnteredEmail] = useState("");
     const [showVerification, setShowVerification] = useState(false);
     const navigate = useNavigate();
-    // const [timeRemaining, setTimeRemainging] = useState(30000);
 
-    const userEmail = useRef()
-
-    const { handleChange: handleLoginChange, handleBlur: handleLoginBlur, formData, didEdit } = useInput({
+    const {handleLoginBlur, formData, didEdit } = useInput({
             email: "",
          
         },
@@ -23,18 +20,16 @@ export default function ForgotPassword(){
             }
         )
 
-    function handleSubmit(event){
+        function handleForgotChange(event){
+            setEnteredEmail(event.target.value)
+        } 
+
+        async function handleSubmit(event){
         event.preventDefault();
         setShowVerification(true)
-        setEnteredEmail(userEmail.current.value)
+        console.log(enteredEmail)
 
         navigate('/verification')
-
-        // setTimeout(()=>{}, 6000)
-
-        // setInterval(()=>{
-        //     setTimeRemainging((prevRemainingTime) => prevRemainingTime - 1)
-        // }, 1000)
 
     }
 
@@ -54,7 +49,9 @@ export default function ForgotPassword(){
                         placeholder=" Enter your username or email"
                         type="email"
                         name="email"
-                        onBlur={() => handleLoginBlur('email')}
+                        value={enteredEmail}
+                        onChange={handleForgotChange}
+                         onBlur={() => handleLoginBlur('email')}
                         required/>
 
                         <button className="w-2/3 p-3 rounded">Submit</button>
