@@ -1,8 +1,8 @@
 const express = require('express');
-const { generateQuestions } = require('./genQuiz.controller');
+const { learnOnline } = require('./learn.controller');
 
 const learnRouter = express.Router();
 
-learnRouter.get("/learn", generateQuestions)
+learnRouter.post("/learn", learnOnline)
 
 module.exports = learnRouter;       

@@ -49,7 +49,6 @@ export default function NewExam({questions}){
 			 <h2 className="text-xl text-stone-950 m-4"><b>Answer the questions below</b></h2>
 
 		{
-				//q represents the current question object .index represents the position of the question in the array.
 
 				questions.map((q, index) =>
 					{
@@ -59,13 +58,6 @@ export default function NewExam({questions}){
 					<p><strong>Q{index + 1}: {q.question}</strong></p>
 					<ul className="questions">
 
-					{/* Converts q.options (an object) into an array of [key, value] pairs. 
-						key: The option label (A, B, C, D).
-						value: The actual answer text.
-
-						[["A", "var"], ["B", "let"], ["C", "const"], ["D", "All of the above"]] => after object.entries()
-
-					*/}
 
 					{Object.entries(q.options).map(([key, value]) => (  
 						<li key={key}>

@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+
 import './styles/App.css';
 import Dashboard from "./components/teachersDashboard/pages/Dashboard";
 import Classes from "./components/teachersDashboard/pages/Classes";
@@ -24,8 +25,64 @@ import StudentDashboard from "./components/studentDashboard/StudentDashboard";
 import TeachersDashboard from "./components/teachersDashboard/TeachersDashboard";
 import ForgotPassword from "./components/ForgotPassword";
 import Verification from "./components/Verification";
+import LearnOnline from "./components/studentDashboard/LearnOnline";
+import NoExam from "./components/studentDashboard/NoExam";
+import NewExam from "./components/studentDashboard/NewExam";
+import { useCallback, useState } from "react";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+
+  const [questions, setQuestions] = useState([]);
+
+  const handleStartQuiz = useCallback(async()=>{
+
+    try{
+
+      const response = await fetch("http://localhost:3000/questions");
+      const data = await response.json();
+      console.log("Data is" + data);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+
+    if (data.candidates && data.candidates.length > 0) {
+      let textResponse = data.candidates[0].content.parts[0].text.trim();
+      textResponse = textResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+
+
+      if (!textResponse.startsWith("{") && !textResponse.startsWith("[")) {
+        throw new Error("Invalid JSON format: Response does not start with '{' or '['");
+      }
+
+      const questions = JSON.parse(textResponse); 
+
+      const newQuestions = questions.questions
+
+      console.log("Extracted Questions:", newQuestions);
+
+  
+    setQuestions(newQuestions || []);
+
+
+      return newQuestions;
+    } else {
+      console.error("No valid response from API");
+    }
+
+  }
+  // eslint-disable-next-line no-unused-vars
+  catch(error){
+     console.error("Error fetching the questions")
+  }
+  
+
+    
+},[]); 
+
+
   const router = createBrowserRouter([
     {
       path: '/',
@@ -43,6 +100,10 @@ function App() {
       element: <Login />,
     },
     {
+      path: '/signUp',
+      element: <SignUp />,
+    },
+    {
       path: '/forgotPassword',
       element: <ForgotPassword />,
     },
@@ -53,7 +114,29 @@ function App() {
 
     {
       path: '/student',
-      element: <StudentDashboard />,
+      element: 
+        <ProtectedRoute/>,
+       children:[
+        {
+          path:'/student',
+          element:<StudentDashboard/>,
+          children:[
+            {
+              index: true,
+              element: <NoExam/>
+            },
+            {
+              path: 'newExam',
+              element:<NewExam questions={questions}/>
+            },
+            {
+              path: 'learn',
+              element:<LearnOnline/>
+            }
+          ]
+        }
+       ], 
+      
     },
     {
       path: '/teacher',
@@ -115,10 +198,6 @@ function App() {
       ],
     },
 
-    {
-      path: '/signUp',
-      element: <SignUp />,
-    },
   ]
   );
 

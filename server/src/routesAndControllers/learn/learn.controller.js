@@ -1,9 +1,13 @@
 require('dotenv').config();
+const axios = require('axios')
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY 
 const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent";
 
 async function learnOnline(req,res){
+
+    const topic = req.body
+
      try {
          
             console.log("Fetching notes")
@@ -14,7 +18,7 @@ async function learnOnline(req,res){
                 {
                     parts: [
                     {
-                        text: `Generate notes on . Format the response as JSON. Please be consistent every time I ask you to generate questions.`
+                        text: `Generate notes on ${topic}. Format the response as JSON. Please be consistent every time I ask you to generate questions.`
                     }
                     ]
                 }

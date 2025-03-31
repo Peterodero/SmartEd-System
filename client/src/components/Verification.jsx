@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function Verification(){
-    const [remainingTime, setRemainingTime] = useState(10000);
+    const [remainingTime, setRemainingTime] = useState(10000); 
     const [isVisible, setIsVisible] = useState(true);
     const timer = useRef()
 

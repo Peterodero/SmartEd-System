@@ -1,80 +1,46 @@
-import profileLogo from '../../assets/profile.png';
-import notificationLogo from '../../assets/notification.png';
-import NoExam from './NoExam';
-import { useCallback, useState } from 'react';
-import NewExam from './NewExam';
-// import { getSignInData } from '../../util/http';
+
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import Sidebar from './Sidebar';
 
-import menuIcon from "../studentDashboard/Icons/menu-icon.gif"
-import LearnOnline from './LearnOnline';
+import { Outlet, useNavigate } from 'react-router-dom';
+import StudentHeader from './StudentHeader';
 
-export default function StudentDashboard(){
+export default function StudentDashboard({handleStartQuiz}){
 
 		
-	const [questions, setQuestions] = useState([]);
-	const [startExam, setStartExam] = useState(false);
 	const [startLearning,setStartLearning] = useState(false)
 	const [sidebarOpen,setSidebarOpen] = useState(false);
+	const navigate = useNavigate();
+	const [data, setData] = useState(null);
 
+	const token = localStorage.getItem("token");
+
+	useEffect(() => {
+        axios.get("http://localhost:3000/student", {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        .then((res) => setData(res.data))
+        .catch((err) => console.error("Unauthorized", err));
+    }, []);
 	
 		const handleStartLearn = async () => {
 			setStartLearning(true);
-
+			navigate('learn')
 		};
 
-		const handleStartQuiz = useCallback(async()=>{
-			setStartExam(true);
-	
-			try{
-	
-				const response = await fetch("http://localhost:3000/questions");
-				const data = await response.json();
-				console.log("Data is" + data);
-		
-				if (!response.ok) {
-					throw new Error(`HTTP error! Status: ${response.status}`);
-				}
-		
-	
-			if (data.candidates && data.candidates.length > 0) {
-				let textResponse = data.candidates[0].content.parts[0].text.trim();
-				textResponse = textResponse.replace(/```json/g, "").replace(/```/g, "").trim();
-	
-	
-				if (!textResponse.startsWith("{") && !textResponse.startsWith("[")) {
-					throw new Error("Invalid JSON format: Response does not start with '{' or '['");
-				}
-	
-				const questions = JSON.parse(textResponse); 
-	
-				const newQuestions = questions.questions
-	
-				console.log("Extracted Questions:", newQuestions);
-	
-		
-			setQuestions(newQuestions || []);
-
-	
-				return newQuestions;
-			} else {
-				console.error("No valid response from API");
-			}
-	
-		}
-		// eslint-disable-next-line no-unused-vars
-		catch(error){
-		   console.error("Error fetching the questions")
-		}
-		
-
-		  
-	},[]); 
 
 	function toggleSidebar(){
 		setSidebarOpen(!sidebarOpen);
 	}
 	
+	function handleLogout() {
+        localStorage.removeItem("token"); // Remove token
+        navigate("/./signIn"); // Redirect to login
+    }
+
+
 	return(
 
 	<div className='student-dashboard mt-0 '>
@@ -82,7 +48,9 @@ export default function StudentDashboard(){
 			<Sidebar 
 			sidebarOpen={sidebarOpen}
 			toggleSidebar={toggleSidebar} 
-			handleStartQuiz={handleStartQuiz}
+			handleStartQuiz={()=>{
+				navigate('newExam')
+				handleStartQuiz()}}
 			handleStartLearn={handleStartLearn}
 			/>
 
@@ -90,77 +58,19 @@ export default function StudentDashboard(){
           sidebarOpen ? 'ml-64' : 'ml-0'
        		 } p-4`}>
 
-			<header className={`transition-margin-left duration-300 flex flex-row justify-between items-center bg-gray-300 p-4 fixed top-0 right-0 ${sidebarOpen ? 'left-64 justify-end' : 'left-0'} `}>
+			<StudentHeader sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}/>
+		
+			<div className=" p-6 m-7 rounded-2xl flex flex-col justify-center items-center">
+				{data ? <h1>{data.message}</h1> : <p>Loading...</p>}
+				<Outlet/>
 
-				{!sidebarOpen && (
-						<div
-						onClick={toggleSidebar}
-						className="bg-gray-400 hover:bg-blue-600 text-white font-bold p-1 rounded"
-						style={{ width: '30px', height: '30px' }}
-						>
-						<img src={menuIcon} alt="Menu" style={{ width: '20px', height: '20px' }} />
-						</div>
-					)}
-
-				<div className='studentInfo'>
-						<img src={notificationLogo} alt='notification'/>
-					<h2>Peter</h2>		
-					<img src={profileLogo} alt="profile"/>		
+				<div className='studentLogout'>
+					<button onClick={handleLogout}>Logout</button>
 				</div>
-			</header>
-			
-
-		<div className=" p-6 m-7 rounded-2xl flex justify-center items-center">
-			{startExam ? <NewExam questions={questions}/> : <NoExam/>}
-		</div>
-			
-			<div className='studentLogout'>
-				<button>Logout</button>
 			</div>
+		</div >
 			
-		</div>
 	</div>
 		
 	)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//if (quizData.candidates && quizData.candidates.length > 0) {
-	// 	let textResponse = quizData.candidates[0].content.parts[0].text.trim();
-	// 	textResponse = textResponse.replace(/```json/g, "").replace(/```/g, "").trim();
-
-
-	// 	if (!textResponse.startsWith("{") && !textResponse.startsWith("[")) {
-	// 		throw new Error("Invalid JSON format: Response does not start with '{' or '['");
-	// 	}
-
-	// 	const questions = JSON.parse(textResponse); // Convert JSON string to object
-
-	// 	const newQuestions = questions.questions
-
-	// 	console.log("Extracted Questions:", questions);
-
-
-	// setQuestions(newQuestions || []);
-
-
-	// 	return newQuestions;
-	// } else {
-	// 	console.error("No valid response from API");
-	// }

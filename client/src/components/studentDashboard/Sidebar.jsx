@@ -30,8 +30,6 @@ export default function Sidebar({sidebarOpen, toggleSidebar, handleStartQuiz, ha
               <div onClick={handleStartLearn} 
               className={sideButtonsStyle}>Learn </div>
 
-             <div className={sideButtonsStyle}>Overview of Progress</div>
-
               <div className={sideButtonsStyle}>View Results</div>
               
               <div className={sideButtonsStyle}>Recommended Courses </div>

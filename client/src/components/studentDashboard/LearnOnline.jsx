@@ -1,29 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
+import OnlineUnits from './Units';
+import {useMutation} from "@tanstack/react-query";
+import { fetchTopic } from '../../util/http';
 
 const LearnOnline = () => {
 
-    const handleLearn = useCallback(async () => {
-                setStartLearning(true);
+    const [message, setMessage] = useState("")
+    const [results, setResults] = useState("")
+
+
+    const { mutate, isLoading, isError, error } = useMutation({
+        mutationFn: fetchTopic,
+        onSuccess: (data) => {
+          // setMessage(data.message || "Topic resources found.");
+          setResults(data);
+        },
+        onError: (error) => {
+          setMessage("Topic not found. Please try another.");
+        },
+      });
     
-                try {
-    
-                    const response = await fetch("http://localhost:3000/learn");
-                    const data = await response.json();
-                    console.log(data)
-                
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-    
-                } catch (error) {
-                    console.error("Error fetching topic of study:", error);
-                }
-            },[]);
+
+        const handleSubmit = (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const formObject = Object.fromEntries(formData);
+            if (!formObject.topic.trim()) {
+                setMessage("Please enter a topic.");
+                return;
+              }
+
+              console.log(formObject.topic)
+              mutate(formObject)
+
+              console.log("data is" + results)
+
+        };
+
+
 
   return (
     <div>
-        <h2>Search your topic to study</h2>
-        <input type='search'/>
+        <form onSubmit={handleSubmit} className='mb-4'>
+            <h2 className='mt-6 mb-2'>Search unit to study</h2>
+            <div className='flex'>
+                <input type='search' name='topic' placeholder='Enter topic' className='search border rounded pt-6 mr-2'/>
+                <button>Search</button>
+            </div>
+        </form>
+        {isLoading && <p>Loading...</p>}
+        {isError && <p>Error: {error.message}</p>}
+        {message && <p>{message}</p>}
+        <OnlineUnits/>
     </div>
   )
 }

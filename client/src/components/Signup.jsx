@@ -1,57 +1,56 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 import {useMutation} from "@tanstack/react-query";
 
 import FormInput from "./FormInput";
-import { hasMinLength, isEmail, isNotEmpty,isEqualsToOtherValue } from "../util/validation";
 import useInput from "../hooks/useInput";
 import { sendSignUpData } from "../util/http";
 
-
-
 export default function SignUp(){
 	
-	const [content, setContent] = useState('');
-	
 	const navigate = useNavigate();
+	const [errorMessage, setErrorMessage] = useState("");
 	
-	const {handleChange: handleSignUpChange, handleBlur:handleSignUpBlur, formData, didEdit} = useInput({
-		email:"",
-		firstPassword:"",
-		secondPassword:"",
-		setContent
-		
-	},
-	{
-		email: false,
-		firstPassword: false,
-		secondPassword:false
-	});
+	const {handleSignUpChange,
+		handleSignUpBlur,
+		signUpFormData,
+		signUpEmailIsInvalid: emailIsInvalid,
+		firstPasswordIsInvalid,
+		secondPasswordIsInvalid,
+		passWordNotMatch,
+		content,
+		handleValidateSignUp} = useInput();
 	
 	const {mutate} = useMutation({
-		mutationFn: sendSignUpData
+		mutationFn: sendSignUpData,
+		onSuccess: () => {
+			// Navigate to login page after successful signup
+			navigate('/signIn');
+		  },
+		onError: (error) => {
+			setErrorMessage(error.message || "Account already exist. Please try again.");
+		// Handle errors (e.g., show a message)
+		}
 	})
 	
 	
-	const emailIsInvalid = didEdit.email && !isEmail(formData.email)
- 	const firstPasswordIsInvalid = didEdit.firstPassword && !hasMinLength(formData.firstPassword,6) 
-
-	const secondPasswordIsInvalid = didEdit.secondPassword && !hasMinLength(formData.secondPassword,6) 
-
-
-	 let passWordNotMatch =  !isEqualsToOtherValue(formData.firstPassword, formData.secondPassword);
-
 	 function handleSubmit(event){
 		event.preventDefault(); 
 		
+		handleValidateSignUp()
 		if(passWordNotMatch){
-			setContent("Passwords do not match")
-
 			return;
 		}
-		
-		mutate({data:formData});
-		navigate('/signIn');
+
+		const signUpData = {
+			email: signUpFormData.email,
+			password: signUpFormData.firstPassword,
+		  };
+		  console.log(signUpData)
+
+		  setErrorMessage("");
+		mutate(signUpData);
 		
 	 }
 	 
@@ -72,7 +71,7 @@ export default function SignUp(){
 					label="Enter Username:"
 					onChange={handleSignUpChange}
 					onBlur={() => handleSignUpBlur('email')}
-					value={formData.email}
+					value={signUpFormData.signUpEmail}
 					error={emailIsInvalid && "Please input the correct email address"}
 				
 				 />
@@ -85,7 +84,7 @@ export default function SignUp(){
 					label="Enter Password:"
 					onChange={handleSignUpChange}
 					onBlur={() => handleSignUpBlur('firstPassword')}
-					value={formData.firstPassword}
+					value={signUpFormData.firstPassword}
 					error={firstPasswordIsInvalid && "Please input the correct password"}
 					
 				/>
@@ -99,12 +98,12 @@ export default function SignUp(){
 					label="Confirm Password:"
 					onChange={handleSignUpChange}
 					onBlur={() => handleSignUpBlur('secondPassword')}
-					value={formData.secondPassword}
+					value={signUpFormData.secondPassword}
 					error={secondPasswordIsInvalid && "Please input the correct password"}
 					/>	
 				
 				<p className="inputError">{content}</p>
-				
+				 {errorMessage && <p className="text-red-600">{errorMessage}</p>}
 				<div>
 					<button type="submit" className="submit">Register</button>
 				</div>
