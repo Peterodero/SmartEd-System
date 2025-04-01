@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef } from "react";
+import * as jwtDecode from "jwt-decode";
+
 import ResultModal from "./ResultModal";
 
 // eslint-disable-next-line react/prop-types
@@ -16,10 +18,14 @@ export default function NewExam({questions}){
 
     const submitExam = useCallback(async () => {
         try {
+			const token = localStorage.getItem("token");
+			const studentId = localStorage.getItem('userId');
+	
             const response = await fetch("http://localhost:3000/evaluate-answers", {
 				method:'POST',
-				body: JSON.stringify({answers,questions}),
+				body: JSON.stringify({answers,questions, studentId}),
 				headers: {
+					Authorization: `Bearer ${token}`,
 					"Content-Type": "application/json" 
 				}
             

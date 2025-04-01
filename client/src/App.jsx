@@ -119,7 +119,7 @@ function App() {
        children:[
         {
           path:'/student',
-          element:<StudentDashboard/>,
+          element:<StudentDashboard handleStartQuiz={handleStartQuiz}/>,
           children:[
             {
               index: true,

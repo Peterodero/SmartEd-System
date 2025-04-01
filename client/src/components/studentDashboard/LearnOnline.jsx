@@ -12,12 +12,11 @@ const LearnOnline = () => {
     const { mutate, isLoading, isError, error } = useMutation({
         mutationFn: fetchTopic,
         onSuccess: (data) => {
-          // setMessage(data.message || "Topic resources found.");
           setResults(data);
         },
         onError: (error) => {
           setMessage("Topic not found. Please try another.");
-        },
+        }, 
       });
     
 
@@ -49,7 +48,6 @@ const LearnOnline = () => {
             </div>
         </form>
         {isLoading && <p>Loading...</p>}
-        {isError && <p>Error: {error.message}</p>}
         {message && <p>{message}</p>}
         <OnlineUnits/>
     </div>

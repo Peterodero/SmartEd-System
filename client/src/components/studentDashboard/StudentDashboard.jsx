@@ -61,7 +61,6 @@ export default function StudentDashboard({handleStartQuiz}){
 			<StudentHeader sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar}/>
 		
 			<div className=" p-6 m-7 rounded-2xl flex flex-col justify-center items-center">
-				{data ? <h1>{data.message}</h1> : <p>Loading...</p>}
 				<Outlet/>
 
 				<div className='studentLogout'>

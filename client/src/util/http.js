@@ -86,9 +86,31 @@ export async function fetchTopic(topic) {
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
-		console.log(response.json());
+	  
+		// const data = response.json();
+		// console.log(data);
 
-	return response.json();
+	
+	// 	if (data.candidates && data.candidates.length > 0) {
+	// 	  let textResponse = data.candidates[0].content.parts[0].text.trim();
+	// 	  textResponse = textResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+	
+	
+	// 	  if (!textResponse.startsWith("{") && !textResponse.startsWith("[")) {
+	// 		throw new Error("Invalid JSON format: Response does not start with '{' or '['");
+	// 	  }
+	
+	// 	  const questions = JSON.parse(textResponse); 
+	
+	// 	  const newQuestions = questions.questions
+	
+	// 	  console.log("Extracted Questions:", newQuestions)
+
+	// 	console.log(response.json());
+	// 	return newQuestions;
+    // } else {
+    //   console.error("No valid response from API");
+    // }
 
 	} catch (error) {
 		console.error("Error fetching topic of study:", error);

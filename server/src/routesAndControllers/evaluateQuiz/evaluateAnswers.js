@@ -1,27 +1,59 @@
- function evaluateAnsw(req, res){
+const User = require('../../models/user.model')
+async function evaluateAnsw(req, res){
 
-    const responseData = req.body
-    console.log(responseData)
+    const {answers,questions,studentId} = req.body
+    // const studentId = req.user.userId;
 
-    function calculateScore(data) { 
+    
+    if ( !answers || !questions) {
+      return res.status(400).json({ error: "Missing required fields" }); 
+  }
+    console.log(answers)
+
+    function calculateScore(data,questions) {  
         let correctCount = 0;
-        const userAnswers = data.answers;
-        const totalQuestions = data.questions.length;
+        const userAnswers = data;
+        const totalQuestions = questions.length;
       
-        data.questions.forEach((q, index) => {
+        questions.forEach((q, index) => {
             const userAnswer = userAnswers[index.toString()];
           if (userAnswer && userAnswer=== q.answer) {
             correctCount++;
           }
         });
       
-        const scorePercentage = (correctCount / totalQuestions) * 100; 
-      
-        return `Final Score: ${scorePercentage.toFixed(0)}%`; //or ${correctCount}/${totalQuestions} or 
+        let scorePercentage = (correctCount / totalQuestions) * 100; 
+        scorePercentage = scorePercentage.toFixed(0)
+        return scorePercentage ; 
       }
       
-      // Get and log the score
-      const score = calculateScore(responseData);
+      const score = calculateScore(answers, questions);
+
+
+    User.findByIdAndUpdate(
+      studentId,  
+      { $push: { scores: { scores: score, studentId: studentId } } }, 
+      { new: true } 
+  )
+  .then(updatedUser => {
+      if (!updatedUser) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+     return res.status(200).json({
+          message: 'Score saved successfully',
+          user: updatedUser,
+      });
+  })
+  .catch(err => {
+      return res.status(500).json({
+          error: 'Failed to save score',
+          details: err,
+      });
+  });
+
+    // await User.save();
+
       console.log(score);
       res.status(200).json({score})
 }

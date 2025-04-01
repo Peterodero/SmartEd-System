@@ -56,7 +56,7 @@ export default function ForgotPassword(){
 
                         <button className="w-2/3 p-3 rounded">Submit</button>
            </form>
-                  <Link to="/signUp">Back to Login</Link>
+                  <Link to="/signIn">Back to Login</Link>
 
             </div>) }
               

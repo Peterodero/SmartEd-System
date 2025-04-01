@@ -16,6 +16,7 @@ export default function Login() {
 		mutationFn: sendSignInData,
 		onSuccess: (data) => {
 			localStorage.setItem("token", data.token);
+			localStorage.setItem('userId', data.userId);
 			navigate('/student');
 		  },
 		onError: (error) => {
