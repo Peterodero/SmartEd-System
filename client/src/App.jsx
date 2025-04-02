@@ -5,10 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import './styles/App.css';
 import Dashboard from "./components/teachersDashboard/pages/Dashboard";
 import Classes from "./components/teachersDashboard/pages/Classes";
-import Events from "./components/teachersDashboard/pages/Events";
-import Exams from "./components/teachersDashboard/pages/Exams";
-import NoticeBoard from "./components/teachersDashboard/pages/NoticeBoard";
-import Routine from "./components/teachersDashboard/pages/Routine";
 import Students from "./components/teachersDashboard/pages/Students";
 import Subjects from "./components/teachersDashboard/pages/Subjects";
 import Navbar from './components/parentDashboard/domain/Navbar';
@@ -30,6 +26,7 @@ import NoExam from "./components/studentDashboard/NoExam";
 import NewExam from "./components/studentDashboard/NewExam";
 import { useCallback, useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MarksUpload from "./components/teachersDashboard/pages/MarksUpload";
 
 function App() {
 
@@ -162,22 +159,10 @@ function App() {
           path: "classes",
           element: <Classes />,
         },
-        {
-          path: "routine",
-          element: <Routine />,
-        },
-        {
-          path: "exams",
-          element: <Exams />,
-        },
-        {
-          path: "notice",
-          element: <NoticeBoard />,
-        },
 
         {
-          path: "events",
-          element: <Events />,
+          path: "marksUpload",
+          element: <MarksUpload />,
         },
       ],
     },

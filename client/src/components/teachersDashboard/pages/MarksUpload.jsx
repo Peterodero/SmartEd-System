@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Routine = () => {
+const MarksUpload = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   
@@ -101,4 +101,4 @@ const Routine = () => {
   );
 };
 
-export default Routine;
+export default MarksUpload;

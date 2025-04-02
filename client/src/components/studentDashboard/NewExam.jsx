@@ -11,7 +11,9 @@ export default function NewExam({questions}){
 	const [answers, setAnswers] = useState({});
 	const dialog = useRef();
 
-    console.log({answers, questions})
+    console.log(answers);
+    console.log(questions);
+
 	const handleAnswerChange = (index, answer) => {
         setAnswers({ ...answers, [index]: answer });
     };
@@ -23,7 +25,11 @@ export default function NewExam({questions}){
 	
             const response = await fetch("http://localhost:3000/evaluate-answers", {
 				method:'POST',
-				body: JSON.stringify({answers,questions, studentId}),
+				body: JSON.stringify({ 
+					answers,
+					questions, 
+					studentId
+				}),
 				headers: {
 					Authorization: `Bearer ${token}`,
 					"Content-Type": "application/json" 
@@ -31,12 +37,20 @@ export default function NewExam({questions}){
             
             });
 
-			const responseData = await response.json()
-            setScore(responseData.score);
+			if(response.ok){
+				console.log(answers)
+				const responseData = await response.json()
+				setScore(responseData.score);
 
-			dialog.current.showModal()
-			console.log(score)
-			console.log(responseData)
+				dialog.current.showModal()
+				console.log(score)
+				console.log(responseData)
+			}else{
+				const data = await response.json()
+				console.log(data)
+			}
+
+			
         } catch (error) {
             console.error("Error submitting answers:", error);
         }

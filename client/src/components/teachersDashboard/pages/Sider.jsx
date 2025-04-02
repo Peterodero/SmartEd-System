@@ -36,12 +36,9 @@ const Sider = ({ isOpen, toggleSidebar }) => {
           {[
             { name: 'Dashboard', path: 'dashboard' },
             { name: 'Subjects', path: 'subjects' },
-            { name: 'Routine', path: 'routine' },
-            { name: 'Exams', path: 'exams' },
+            { name: 'MarksUpload', path: 'marksUpload' },
             { name: 'Classes', path: 'classes' },
             { name: 'Students', path: 'students' },
-            { name: 'Notice Board', path: 'notice' },
-            { name: 'Events', path: 'events' },
             { name: 'Log out', path: 'loginPage' },
           ].map((item) => (
             <div
