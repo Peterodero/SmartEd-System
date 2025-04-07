@@ -8,6 +8,10 @@ export default function ForgotPassword(){
 
     const [enteredEmail, setEnteredEmail] = useState("");
     const [showVerification, setShowVerification] = useState(false);
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+    const [isSending, setIsSending] = useState(false);
+
     const navigate = useNavigate();
 
     const {handleLoginBlur, formData, didEdit } = useInput({
@@ -27,15 +31,40 @@ export default function ForgotPassword(){
         async function handleSubmit(event){
         event.preventDefault();
         setShowVerification(true)
-        console.log(enteredEmail)
+        setIsSending(true);
+        setMessage("");
+        setError("");
 
-        navigate('/verification')
+        try {
+            const response = await fetch("http://localhost:3000/forgot-password", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ email: enteredEmail })
+            });
+      
+            const data = await response.json();
+      
+            if (!response.ok) {
+              throw new Error(data.message || "Failed to send reset email");
+            }
+      
+            setMessage("Password reset link has been sent to your email.");
+            // navigate('/verification')
+
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setIsSending(false);
+          }
+
 
     }
 
     return(
         <div >
-            {showVerification && <Verification/>}
+            
             {!showVerification && (
             <div className="flex flex-col items-center gap-4 mt-10">
                 <h1><b>Forgot Password</b></h1>
@@ -54,8 +83,10 @@ export default function ForgotPassword(){
                          onBlur={() => handleLoginBlur('email')}
                         required/>
 
-                        <button className="w-2/3 p-3 rounded">Submit</button>
-           </form>
+                        <button className="w-2/3 p-3 rounded"> {isSending ? "Sending..." : "Submit"}</button>
+                        {message && <p className="text-green-600">{message}</p>}
+                        {error && <p className="text-red-600">{error}</p>}
+                 </form>
                   <Link to="/signIn">Back to Login</Link>
 
             </div>) }

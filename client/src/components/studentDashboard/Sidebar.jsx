@@ -1,5 +1,18 @@
+import {useNavigate} from 'react-router-dom'
+export default function Sidebar({sidebarOpen, toggleSidebar, handleDirectQuiz, handleStartLearn}){
 
-export default function Sidebar({sidebarOpen, toggleSidebar, handleStartQuiz, handleStartLearn}){
+  const navigate = useNavigate()
+
+  function handleViewResults(){
+    navigate('viewResults')
+  }
+
+  function handleViewProfile(){
+    navigate('viewProfile')
+  }
+  function handleCheckRecommendations(){
+    navigate('courseRecommendations')
+  }
 
       let sideButtonsStyle = "hover:bg-gray-500 hover:text-black transition duration-300 rounded p-1"
 
@@ -24,17 +37,17 @@ export default function Sidebar({sidebarOpen, toggleSidebar, handleStartQuiz, ha
            
 
             <div  className={`flex flex-col gap-3 block py-2 px-4 rounded-md cursor-pointer transition-colors duration-200 sidebarDiv1`}>
-              <div onClick={handleStartQuiz} 
+              <div onClick={handleDirectQuiz} 
               className={sideButtonsStyle}>Start Quiz</div>
 
               <div onClick={handleStartLearn} 
               className={sideButtonsStyle}>Learn </div>
 
-              <div className={sideButtonsStyle}>View Results</div>
+              <div className={sideButtonsStyle} onClick={handleViewResults}>View Results</div>
               
-              <div className={sideButtonsStyle}>Recommended Courses </div>
+              <div className={sideButtonsStyle} onClick={handleCheckRecommendations}>Recommended Courses </div>
 
-              <div className={sideButtonsStyle}>Profile Settings</div>
+              <div className={sideButtonsStyle} onClick={handleViewProfile}>Profile Settings</div>
 
             </div>
 

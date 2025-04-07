@@ -59,9 +59,9 @@
 .loginForm{
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 10px;
   background-color: white;
-  padding: 50px;
+  padding: 30px;
   border-radius: 5px;
   width: 400px;
   box-shadow: 2px 4px 5px rgb(105, 105, 105);

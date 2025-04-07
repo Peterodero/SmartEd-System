@@ -39,6 +39,7 @@ export async function sendSignInData(data) {
 		console.log(resData.token)
 
 	}
+	console.log(`Response:${resData}`)
 
 	return resData;
 }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Sider from './Sider';
-import menuIcon from "../../teachersDashboard/Icons/menu-icon.gif"
 
 
 const Dashboard = () => {
@@ -11,7 +10,7 @@ const Dashboard = () => {
       <div>
     
 
-<div className="bg-gray-900 text-white font-sans p-4">
+<div className="bg-gray-400 text-white font-sans p-4">
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <div className="relative">

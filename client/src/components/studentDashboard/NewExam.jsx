@@ -2,17 +2,75 @@ import { useState, useCallback, useRef } from "react";
 import * as jwtDecode from "jwt-decode";
 
 import ResultModal from "./ResultModal";
+import SelectedTopic from "./SelectTopic";
 
+
+const topics = ['Calculus', 'Programming', 'Networking', 'Computer Hardware', 'Database'];
 // eslint-disable-next-line react/prop-types
-export default function NewExam({questions}){
+export default function NewExam(){
 
-
+	const [questions, setQuestions] = useState([]);
+	const [selectedTopic, setSelectedTopic] = useState(null);
 	const [score, setScore] = useState(null);
 	const [answers, setAnswers] = useState({});
 	const dialog = useRef();
 
+	const handleStartQuiz = useCallback(async()=>{
+
+		try{
+	
+		  const response = await fetch("http://localhost:3000/questions",{
+			method:'POST',
+			body: JSON.stringify({selectedTopic}),
+			headers: {
+				"Content-Type": "application/json" 
+			}
+		
+		});
+		  const data = await response.json();
+		  console.log("Data is" + data);
+	  
+		  if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		  }
+	  
+	
+		if (data.candidates && data.candidates.length > 0) {
+		  let textResponse = data.candidates[0].content.parts[0].text.trim();
+		  textResponse = textResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+	
+	
+		  if (!textResponse.startsWith("{") && !textResponse.startsWith("[")) {
+			throw new Error("Invalid JSON format: Response does not start with '{' or '['");
+		  }
+	
+		  const questions = JSON.parse(textResponse); 
+	
+		  const newQuestions = questions.questions
+	
+		  console.log("Extracted Questions:", newQuestions);
+	
+	  
+		setQuestions(newQuestions || []);
+	
+	
+		  return newQuestions;
+		} else {
+		  console.error("No valid response from API");
+		}
+	
+	  }
+	  // eslint-disable-next-line no-unused-vars
+	  catch(error){
+		 console.error("Error fetching the questions")
+	  }
+	  
+	
+		
+	},[selectedTopic]); 
+	
+
     console.log(answers);
-    console.log(questions);
 
 	const handleAnswerChange = (index, answer) => {
         setAnswers({ ...answers, [index]: answer });
@@ -28,6 +86,7 @@ export default function NewExam({questions}){
 				body: JSON.stringify({ 
 					answers,
 					questions, 
+					selectedTopic,
 					studentId
 				}),
 				headers: {
@@ -55,11 +114,42 @@ export default function NewExam({questions}){
             console.error("Error submitting answers:", error);
         }
 
-    },[]);
+    },[answers, questions, selectedTopic]);
 
 
 	return(
-		<>
+	<>
+		{/* <SelectedTopic handleStartQuiz={handleStartQuiz}/> */}
+	<div className=" mx-auto pt-6 pb-6 pl-10 pr-10 bg-white shadow-lg rounded-lg">
+      <h2 className="text-xl font-semibold mb-4">Select a Topic</h2>
+      <div className=" flex gap-1.5">
+        {topics.map((topic) => (
+          <button
+            key={topic}
+            onClick={() => setSelectedTopic(topic)}
+            className={`block w-full text-left px-4 py-2 rounded-md transition-colors 
+              ${
+                selectedTopic === topic
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 hover:bg-gray-300"
+              }`}
+          >
+            {topic}
+          </button>
+          
+        ))}
+      </div>
+
+      {selectedTopic && (
+        <p className="mt-4 text-lg font-medium">
+          Selected Topic: <span className="text-blue-600">{selectedTopic}</span>
+        </p>
+        
+      )}
+      {selectedTopic && <button onClick={handleStartQuiz}>Search</button>}
+    </div>
+
+
 		{questions.length<=0 && <p className="mt-10"><b>Loading questions.Please wait...</b></p>}
 
 		{questions.length >0 && 

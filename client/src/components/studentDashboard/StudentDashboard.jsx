@@ -7,10 +7,10 @@ import Sidebar from './Sidebar';
 import { Outlet, useNavigate } from 'react-router-dom';
 import StudentHeader from './StudentHeader';
 
-export default function StudentDashboard({handleStartQuiz}){
+export default function StudentDashboard(){
 
 		
-	const [startLearning,setStartLearning] = useState(false)
+	// const [startLearning,setStartLearning] = useState(false)
 	const [sidebarOpen,setSidebarOpen] = useState(false);
 	const navigate = useNavigate();
 	const [data, setData] = useState(null);
@@ -26,7 +26,7 @@ export default function StudentDashboard({handleStartQuiz}){
     }, []);
 	
 		const handleStartLearn = async () => {
-			setStartLearning(true);
+			// setStartLearning(true);
 			navigate('learn')
 		};
 
@@ -48,9 +48,9 @@ export default function StudentDashboard({handleStartQuiz}){
 			<Sidebar 
 			sidebarOpen={sidebarOpen}
 			toggleSidebar={toggleSidebar} 
-			handleStartQuiz={()=>{
+			handleDirectQuiz={()=>{
 				navigate('newExam')
-				handleStartQuiz()}}
+				}}
 			handleStartLearn={handleStartLearn}
 			/>
 

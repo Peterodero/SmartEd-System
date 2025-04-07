@@ -26,7 +26,7 @@ export default function Verification(){
     const time = remainingTime/1000
 
     return(
-        <div  className="flex flex-col items-center gap-4 mt-10">
+        <div  className="flex flex-col items-center gap-4 mt-10 bg-stone-50 ml-25 mr-25 p-6">
             <h1>Reset link sent to your email</h1>
            {isVisible && <p className=" ">{time}</p>} 
         </div>

@@ -8,9 +8,11 @@ export default function useInput(){
 		password: ""
 	});
 	const [signUpFormData, setSignUpFormData] = useState({	
+			name:"",
 			email:"",
 			firstPassword:"",
 			secondPassword:"",	
+			role: "student"
 		},
 		)
 	const [content, setContent] = useState('');
@@ -20,6 +22,7 @@ export default function useInput(){
 		password: false
 	})
 	const [signUpEdit, setSignUpEdit] = useState({
+		name: false,
 		email: false,
 		firstPassword: false,
 		secondPassword:false
@@ -47,7 +50,7 @@ export default function useInput(){
 		setSignUpFormData((prevState)=> {
 			return{
 				...prevState,
-				[event.target.name]: event.target.value
+				[event.target.name]: event.target.value 
 			}
 		})
 		
@@ -66,6 +69,8 @@ export default function useInput(){
 			[identifier]:true
 		}))
 	}
+
+	const nameIsInvalid = !hasMinLength(signUpFormData.name,3) && signUpEdit.name
 
 	const loginEmailIsInvalid = !isEmail(loginFormData.email) && didEdit.email //isNotEmpty(formData.email)
 	const signUpEmailIsInvalid = !isEmail(signUpFormData.email) && signUpEdit.email
@@ -104,6 +109,7 @@ export default function useInput(){
 		didEdit,
 		content,
 		loginEmailIsInvalid,
+		nameIsInvalid,
 		signUpEmailIsInvalid,
 		loginPasswordIsInvalid,
 		firstPasswordIsInvalid,

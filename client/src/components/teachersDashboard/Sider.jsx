@@ -35,11 +35,12 @@ const Sider = ({ isOpen, toggleSidebar }) => {
           {/* Menu Items */}
           {[
             { name: 'Dashboard', path: 'dashboard' },
-            { name: 'Subjects', path: 'subjects' },
-            { name: 'MarksUpload', path: 'marksUpload' },
-            { name: 'Classes', path: 'classes' },
-            { name: 'Students', path: 'students' },
-            { name: 'Log out', path: 'loginPage' },
+            { name: 'Registered Students', path: 'students' },
+            { name: 'Student Recommendations', path: 'recommendation' },
+            { name: 'Upload Marks', path: 'uploadMarks' },
+            { name: 'Students Results', path: 'studentsResults' },
+            { name: 'Set Questions', path: 'setQuestions' },
+            { name: 'Profile Settings', path: 'lecturerProfile' },
           ].map((item) => (
             <div
               key={item.name}

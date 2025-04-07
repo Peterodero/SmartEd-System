@@ -16,6 +16,7 @@ export default function SignUp(){
 		handleSignUpBlur,
 		signUpFormData,
 		signUpEmailIsInvalid: emailIsInvalid,
+		nameIsInvalid,
 		firstPasswordIsInvalid,
 		secondPasswordIsInvalid,
 		passWordNotMatch,
@@ -44,8 +45,10 @@ export default function SignUp(){
 		}
 
 		const signUpData = {
+			name: signUpFormData.name,
 			email: signUpFormData.email,
 			password: signUpFormData.firstPassword,
+			role: signUpFormData.role
 		  };
 		  console.log(signUpData)
 
@@ -56,22 +59,36 @@ export default function SignUp(){
 	 
 	 
 	return(
-		<div className="sign mt-2"> 
+		<div className="sign mt-1"> 
 			<h1><b>Welcome to SmartEd</b></h1>
-			<h2 className="mt-1.5 text-lg"><b>Fill in the details to create an account</b></h2>
+			<h2 className="mt-1 text-lg"><b>Fill in the details to create an account</b></h2>
 			
-			<form className="loginForm w-full mt-3" onSubmit={handleSubmit}>
-				
+			<form className="loginForm w-full mt-2" onSubmit={handleSubmit}>
+
+				<FormInput 
+					type="text" 
+					name="name" 
+					placeholder="Student/Employer name"
+					className="inputs"
+					id="name"
+					label="Enter Username:"
+					onChange={handleSignUpChange}
+					onBlur={() => handleSignUpBlur('name')}
+					value={signUpFormData.name}
+					error={nameIsInvalid && "Please input a valid name"}
+					
+					/>
+					
 				<FormInput 
 					type="email" 
 					name="email" 
 					placeholder="Student/Employer email"
 					className="inputs"
 					id="email"
-					label="Enter Username:"
+					label="Enter Email:"
 					onChange={handleSignUpChange}
 					onBlur={() => handleSignUpBlur('email')}
-					value={signUpFormData.signUpEmail}
+					value={signUpFormData.email}
 					error={emailIsInvalid && "Please input the correct email address"}
 				
 				 />
@@ -101,6 +118,13 @@ export default function SignUp(){
 					value={signUpFormData.secondPassword}
 					error={secondPasswordIsInvalid && "Please input the correct password"}
 					/>	
+
+				<div className="flex justify-end mt-1">
+				<select name="role" value={signUpFormData.role} onChange={handleSignUpChange} className="mb-2 p-1">
+					<option value="student">Student</option>
+					<option value="lecturer">Lecturer</option>
+				</select>
+				</div>
 				
 				<p className="inputError">{content}</p>
 				 {errorMessage && <p className="text-red-600">{errorMessage}</p>}

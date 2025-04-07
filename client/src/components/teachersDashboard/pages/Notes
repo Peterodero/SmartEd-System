@@ -1,0 +1,61 @@
+Lecturer Dashboard Navbar Buttons
+Home (Dashboard Overview)
+
+Button/Link: "Dashboard" or "Home"
+
+Purpose: A quick link to the main landing page of the dashboard, which contains important statistics and recent activities.
+
+Student Results
+
+Button/Link: "Student Results"
+
+Purpose: Link to the page where the lecturer can view student results for various topics and quizzes.
+
+Student Profiles
+
+Button/Link: "Profiles"
+
+Purpose: Link to view and manage individual student profiles, including performance overviews, feedback, and recommendations.
+
+Course/Quiz Management
+
+Button/Link: "Manage Quizzes"
+
+Purpose: Allows the lecturer to view, create, and manage quizzes and questions related to different topics.
+
+Recommendations
+
+Button/Link: "Recommendations"
+
+Purpose: View personalized course or specialization recommendations based on student performance (e.g., suggested areas of improvement).
+
+Reports and Analytics
+
+Button/Link: "Reports"
+
+Purpose: Link to the reports page where the lecturer can view in-depth performance analytics and export reports.
+
+Notifications (Optional)
+
+Button/Link: "Notifications" (Icon: Bell)
+
+Purpose: If your platform includes notifications for updates or student activity, this button would show recent alerts or updates.
+
+Settings
+
+Button/Link: "Settings" (Icon: Gear)
+
+Purpose: Link to the settings page where the lecturer can update their profile, preferences, and other personal information.
+
+Help/Support (Optional)
+
+Button/Link: "Help" (Icon: Question Mark)
+
+Purpose: Link to the Help/Support page where the lecturer can access documentation, FAQs, and contact support.
+
+Log Out
+
+Button/Link: "Log Out" (Icon: Logout)
+
+Purpose: Log out the lecturer from the platform.
+

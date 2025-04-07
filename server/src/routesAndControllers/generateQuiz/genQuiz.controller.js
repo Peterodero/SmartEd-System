@@ -6,8 +6,12 @@ require('dotenv').config();
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY 
 
 async function generateQuestions(req, res){
+
+    const topic = req.body 
+    const searchTopic = topic.selectedTopic
+    console.log(searchTopic)
     try {
-     
+      
         console.log("Fetching")
         const response = await axios.post(
         `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`,
@@ -16,7 +20,7 @@ async function generateQuestions(req, res){
             {
                 parts: [
                 {
-                    text: "Generate 10 different questions on JavaScript. Each question should have four options (A, B, C, D) with one correct answer. Format the response as JSON. Please be consistent every time I ask you to generate questions."
+                    text: `Generate 10 different questions on ${searchTopic}. Each question should have four options (A, B, C, D) with one correct answer. Format the response as JSON. Please be consistent every time I ask you to generate questions.`
                 }
                 ]
             }

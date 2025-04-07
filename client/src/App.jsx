@@ -3,13 +3,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
 import './styles/App.css';
-import Dashboard from "./components/teachersDashboard/pages/Dashboard";
-import Classes from "./components/teachersDashboard/pages/Classes";
-import Students from "./components/teachersDashboard/pages/Students";
-import Subjects from "./components/teachersDashboard/pages/Subjects";
+import Dashboard from "./components/teachersDashboard/Dashboard";
+import StudentCount from "./components/teachersDashboard/StudentsNumber";
 import Navbar from './components/parentDashboard/domain/Navbar';
 import Dashbod from './components/parentDashboard/domain/Dashboard1'; // Corrected import
-import StudentResults from './components/parentDashboard/domain/StudentResults';
 import Talks from './components/parentDashboard/domain/Talks';
 
 import HomePage from './components/Home';
@@ -24,61 +21,15 @@ import Verification from "./components/Verification";
 import LearnOnline from "./components/studentDashboard/LearnOnline";
 import NoExam from "./components/studentDashboard/NoExam";
 import NewExam from "./components/studentDashboard/NewExam";
-import { useCallback, useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
-import MarksUpload from "./components/teachersDashboard/pages/MarksUpload";
+import StudentResults from "./components/studentDashboard/StudentResults";
+import StudentProfile from "./components/studentDashboard/StudentProfile";
+import StudentRecommendations from "./components/studentDashboard/StudentRecommendation";
+import LecturerProfile from "./components/teachersDashboard/LecturerProfile";
+import AllStudentResults from "./components/teachersDashboard/ViewResults";
+
 
 function App() {
-
-  const [questions, setQuestions] = useState([]);
-
-  const handleStartQuiz = useCallback(async()=>{
-
-    try{
-
-      const response = await fetch("http://localhost:3000/questions");
-      const data = await response.json();
-      console.log("Data is" + data);
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-
-    if (data.candidates && data.candidates.length > 0) {
-      let textResponse = data.candidates[0].content.parts[0].text.trim();
-      textResponse = textResponse.replace(/```json/g, "").replace(/```/g, "").trim();
-
-
-      if (!textResponse.startsWith("{") && !textResponse.startsWith("[")) {
-        throw new Error("Invalid JSON format: Response does not start with '{' or '['");
-      }
-
-      const questions = JSON.parse(textResponse); 
-
-      const newQuestions = questions.questions
-
-      console.log("Extracted Questions:", newQuestions);
-
-  
-    setQuestions(newQuestions || []);
-
-
-      return newQuestions;
-    } else {
-      console.error("No valid response from API");
-    }
-
-  }
-  // eslint-disable-next-line no-unused-vars
-  catch(error){
-     console.error("Error fetching the questions")
-  }
-  
-
-    
-},[]); 
-
 
   const router = createBrowserRouter([
     {
@@ -116,7 +67,7 @@ function App() {
        children:[
         {
           path:'/student',
-          element:<StudentDashboard handleStartQuiz={handleStartQuiz}/>,
+          element:<StudentDashboard />,
           children:[
             {
               index: true,
@@ -124,7 +75,19 @@ function App() {
             },
             {
               path: 'newExam',
-              element:<NewExam questions={questions}/>
+              element:<NewExam/>
+            },
+            {
+              path: 'viewResults',
+              element:<StudentResults/>
+            },
+            {
+              path: 'courseRecommendations',
+              element: <StudentRecommendations/>,
+            },
+            {
+              path: 'viewProfile',
+              element: <StudentProfile/>,
             },
             {
               path: 'learn',
@@ -136,35 +99,38 @@ function App() {
       
     },
     {
-      path: '/teacher',
-      element: <TeachersDashboard />,
+      path: '/lecturer',
+      element: <ProtectedRoute/>,
       children: [
         {
-          index: true,
-          element: <Dashboard />,
-        },
-        {
-          path: "dashboard",
-          element: <Dashboard />,
-        },
-        {
-          path: "students",
-          element: <Students />,
-        },
-        {
-          path: "subjects",
-          element: <Subjects />,
-        },
-        {
-          path: "classes",
-          element: <Classes />,
-        },
-
-        {
-          path: "marksUpload",
-          element: <MarksUpload />,
-        },
-      ],
+        element: <TeachersDashboard/>,
+        path: '/lecturer',
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          {
+            path: "dashboard",
+            element: <Dashboard />,
+          },
+          {
+            path: "students",
+            element: <StudentCount />,
+          },
+          {
+            path: "studentsResults",
+            element: <AllStudentResults />,
+          },
+          {
+            path: "lecturerProfile",
+            element: <LecturerProfile />,
+          },
+        ],
+       },
+        
+      ]
+      
     },
 
     {

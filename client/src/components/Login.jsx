@@ -11,14 +11,20 @@ import { sendSignInData } from "../util/http.js";
 export default function Login() {
 
 	const navigate = useNavigate();
-
+ 
 	const { mutate } = useMutation({
 		mutationFn: sendSignInData,
 		onSuccess: (data) => {
 			localStorage.setItem("token", data.token);
 			localStorage.setItem('userId', data.userId);
-			navigate('/student');
-		  },
+			localStorage.setItem("userName", data.name);
+			localStorage.setItem("role", data.role)
+			if (data.role === "student") {
+				navigate("/student");
+			} else if (data.role === "lecturer") {
+				navigate("/lecturer");
+			}
+		},
 		onError: (error) => {
 		console.error("failed to sign In", error);
 		// Handle errors (e.g., show a message)

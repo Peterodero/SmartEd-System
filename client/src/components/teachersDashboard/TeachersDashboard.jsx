@@ -1,8 +1,8 @@
 
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../Header";
-import Sider from "./pages/Sider";
-import { useState } from "react";
+import Sider from "./Sider";
+import { useState, useEffect } from "react";
 import menuIcon from "./Icons/menu-icon.gif"
 import notification from "../../assets/notification.png"
 import profile from "../../assets/profile.png"
@@ -11,12 +11,26 @@ import profile from "../../assets/profile.png"
 
 function TeachersDashboard() {
 
-  
+    const [studentName, setStudentName] = useState("");
+    const[userRole, setUserRole]= useState("")
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+
+useEffect(() => {
+    const name = localStorage.getItem("userName"); // this gets name from localStorage
+    const role = localStorage.getItem("role");
+    if (name) setStudentName(name);
+    if(role) setUserRole(role)
+  }, []);
   
     const toggleSidebar = () => {
       setIsOpen(!isOpen);
     };
+
+    function handleLogout() {
+      localStorage.removeItem("token"); // Remove token
+      navigate("/signIn"); // Redirect to login
+  }
 
   return (
  
@@ -37,14 +51,16 @@ function TeachersDashboard() {
                   )}
         
                 <div className='studentInfo'>
-                    <img src={notification} alt='notification'/>
-                  <h2>Shaddy</h2>		
+                  <h2>{studentName}</h2>		
                   <img src={profile} alt="profile"/>		
                 </div>
             </header>
       
-        <div className={`transition-margin-left duration-300 transition-all flex flex-col right-0 fixed ${isOpen ? ' left-64' : 'left-0'}`}>
+        <div className={`transition-margin-left duration-300 transition-all flex flex-col right-0 p-6 fixed ${isOpen ? ' left-64' : 'left-0'}`}>
           <Outlet/>
+          <div className='studentLogout'>
+					  <button onClick={handleLogout}>Logout</button>
+				</div>
         </div>
     </>
   )
