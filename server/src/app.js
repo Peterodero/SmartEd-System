@@ -34,5 +34,6 @@ app.use(studentNumberRouter);
 app.use(lecturerProfileRouter);
 app.use(allStudentResultsRouter);
 app.use(forgotPasswordRouter);
+app.use("/api/questions", questionRoutes)
 
 module.exports = app;
