@@ -26,7 +26,7 @@ const StudentCount = () => {
   }, []); 
 
   if (loading) {
-    return <div className="p-4">Loading...</div>; 
+    return <p className="text-center text-lg p-4"><b>Loading...</b></p>; 
   }
 
   return (

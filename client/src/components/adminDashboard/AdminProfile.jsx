@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function LecturerProfile() {
+export default function AdminProfile() {
   const [lecturer, setLecturer] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [updatedData, setUpdatedData] = useState({});

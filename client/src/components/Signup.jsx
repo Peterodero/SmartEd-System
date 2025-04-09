@@ -123,6 +123,8 @@ export default function SignUp(){
 				<select name="role" value={signUpFormData.role} onChange={handleSignUpChange} className="mb-2 p-1">
 					<option value="student">Student</option>
 					<option value="lecturer">Lecturer</option>
+					<option value="lecturer">Lecturer</option>
+
 				</select>
 				</div>
 				

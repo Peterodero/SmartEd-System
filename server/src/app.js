@@ -14,6 +14,7 @@ const lecturerProfileRouter = require('./routesAndControllers/profile/lecRoute')
 const allStudentResultsRouter = require('./routesAndControllers/viewResults/lecViewResultsRoute');
 const { forgotPasswordRouter } = require('./routesAndControllers/forgotPassword/forgotPassword');
 const setQuestionRouter = require('./routesAndControllers/generateQuiz/questionsRouter');
+const lecturerRecommendationRouter = require('./routesAndControllers/recommendations/lecRecommendation.route');
 
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(learnRouter);
 app.use(viewResultsRouter);
 app.use(studentProfileRouter);
 app.use(recommendationRouter);
+app.use(lecturerRecommendationRouter);
 app.use(studentNumberRouter);
 app.use(lecturerProfileRouter);
 app.use(allStudentResultsRouter);

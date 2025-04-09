@@ -13,10 +13,12 @@ export default function NewExam(){
 	const [selectedTopic, setSelectedTopic] = useState(null);
 	const [score, setScore] = useState(null);
 	const [answers, setAnswers] = useState({});
+	const [load, setLoad] = useState(false);
 	const dialog = useRef();
 
 	const handleStartQuiz = useCallback(async()=>{
 
+		setLoad(true)
 		try{
 	
 		  const response = await fetch("http://localhost:3000/questions",{
@@ -53,6 +55,7 @@ export default function NewExam(){
 	  
 		setQuestions(newQuestions || []);
 	
+		setLoad(false)
 	
 		  return newQuestions;
 		} else {
@@ -65,7 +68,6 @@ export default function NewExam(){
 		 console.error("Error fetching the questions")
 	  }
 	  
-	
 		
 	},[selectedTopic]); 
 	
@@ -150,7 +152,7 @@ export default function NewExam(){
     </div>
 
 
-		{questions.length<=0 && <p className="mt-10"><b>Loading questions.Please wait...</b></p>}
+		{load && <p className="mt-10"><b>Loading questions.Please wait...</b></p>}
 
 		{questions.length >0 && 
 			<main className="newExamMain">

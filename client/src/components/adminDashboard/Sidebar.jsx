@@ -17,7 +17,7 @@ const Sider = ({ isOpen, toggleSidebar }) => {
       } overflow-x-hidden bg-gray-800`}
     >
       {/* Close Button */}
-      <div onClick={toggleSidebar}  className=" bg-red-400 w-8 h-8 pb-4 hover:cursor-pointer absolute top-4 right-4 text-xl text-white text-center font-bold  rounded">
+      <div onClick={toggleSidebar} className="bg-red-400 w-8 h-8 p-1 absolute top-4 right-4 text-2xl text-white font-bold  rounded">
         &times;
       </div>
 
@@ -26,20 +26,18 @@ const Sider = ({ isOpen, toggleSidebar }) => {
         <div className="flex items-center mb-8">
           <div className="bg-purple-600 rounded-full w-10 h-10 flex items-center justify-center mr-2"></div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold">Lecturer</span>
-            <span className="text-xs text-gray-400">Lecturer Dashboard</span>
+            <span className="text-sm font-semibold">Teacher</span>
+            <span className="text-xs text-gray-400">Teacher Dashboard</span>
           </div>
         </div>
 
         <nav className='m-5 '>  
-          {/* Menu Items */}
           {[
-            { name: 'Dashboard', path: 'dashboard' },
+            { name: 'Dashboard', path: 'adDashboard' },
             { name: 'Registered Students', path: 'students' },
-            { name: 'Student Recommendations', path: 'allRecommendations' },
-            { name: 'Students Results', path: 'studentsResults' },
-            { name: 'Set Questions', path: 'setQuestions' },
-            { name: 'Profile Settings', path: 'lecturerProfile' },
+            { name: 'Registered Lecturers', path: 'lecturers' },
+            { name: 'Profile Settings', path: 'adminProfile' },
+            { name: 'Remove Members', path: 'remove' },
           ].map((item) => (
             <div
               key={item.name}
@@ -54,7 +52,11 @@ const Sider = ({ isOpen, toggleSidebar }) => {
             </div>
           ))}
         </nav>
-        
+
+        {/* Sidebar Footer */}
+        <div className="mt-8 border-t border-gray-700 pt-4">
+          <p className="text-sm text-gray-400">@onyangosoftwares</p>
+        </div>
       </div>
     </div>
   );
