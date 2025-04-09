@@ -38,3 +38,12 @@ app.use(forgotPasswordRouter);
 app.use("/api/questions", setQuestionRouter)
 
 module.exports = app;
+
+// GEMINI_API_KEY = AIzaSyBsm7086P-LUdJ61s07sIR-v7PApUAJqjI
+// MONGO_URL = mongodb+srv://peterodero450:j3MCnkxCAQk8BtZN@edcluster.t5egyrg.mongodb.net/?retryWrites=true&w=majority&appName=EdCluster 
+// PORT = 3000
+// JWT_SECRET = aea376b019ebe5a87a122f805b0a2874b5c30c267e10c0a4e3df5ff4468929021c6b965d887659fe341eb9b007b2491faed0758238573e616bb542907f3d9653
+// GEMINI_API_URL = https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent
+// EMAIL_USER = 
+// EMAIL_PASS = 
+// RESET_APP_URL = https://password-reset-smart-ed.vercel.app
