@@ -66,7 +66,7 @@ const SetQuestions = () => {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="p-6 max-w-4xl mx-auto overflow-auto">
       <h1 className="text-3xl font-bold mb-6 text-center">Computer Science Exam Generator</h1>
       
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
@@ -116,7 +116,7 @@ const SetQuestions = () => {
       </div>
 
       {Object.keys(subjectsData.questions).length > 0 && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 mb-4">
           <h2 className="text-2xl font-bold mb-4 text-center">Generated Exam Paper</h2>
           <div className="mb-6 flex justify-between items-center">
             <p className="text-gray-600">

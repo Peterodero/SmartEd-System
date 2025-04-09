@@ -1,6 +1,6 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 require('dotenv').config();
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // Function to generate section-based questions for a subject
 const generateSubjectQuestions = async (subject, sectionAQuestions = 6, sectionBQuestions = 4) => {

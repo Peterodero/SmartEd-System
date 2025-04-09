@@ -56,7 +56,7 @@ useEffect(() => {
                 </div>
             </header>
       
-        <div className={`transition-margin-left duration-300 transition-all flex flex-col right-0 p-6 fixed ${isOpen ? ' left-64' : 'left-0'}`}>
+        <div className={`transition-margin-left duration-300 transition-all flex flex-col right-0 p-6 ${isOpen ? ' ml-64' : 'ml-0'}`}>
           <Outlet/>
           <div className='studentLogout'>
 					  <button onClick={handleLogout}>Logout</button>
