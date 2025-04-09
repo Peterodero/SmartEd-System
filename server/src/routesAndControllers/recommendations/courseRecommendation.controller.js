@@ -12,7 +12,7 @@ async function getRecommendations(req, res) {
 
     if (!userScore) {
       return res.status(404).json({ error: "No scores found for this student" });
-    }
+    } 
 
     // Convert scores Map to an object for processing
     const studentScores = Object.fromEntries(userScore.scores);
