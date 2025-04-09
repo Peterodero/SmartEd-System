@@ -27,6 +27,7 @@ import StudentProfile from "./components/studentDashboard/StudentProfile";
 import StudentRecommendations from "./components/studentDashboard/StudentRecommendation";
 import LecturerProfile from "./components/teachersDashboard/LecturerProfile";
 import AllStudentResults from "./components/teachersDashboard/ViewResults";
+import SetQuestions from "./components/teachersDashboard/SetQuestions";
 
 
 function App() {
@@ -58,6 +59,10 @@ function App() {
     {
       path: '/verification',
       element : <Verification/>
+    },
+    {
+      path: '/setuestions',
+      element : <SetQuestions/>
     },
 
     {
