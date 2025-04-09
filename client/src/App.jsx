@@ -60,11 +60,7 @@ function App() {
       path: '/verification',
       element : <Verification/>
     },
-    {
-      path: '/setuestions',
-      element : <SetQuestions/>
-    },
-
+  
     {
       path: '/student',
       element: 
@@ -127,6 +123,11 @@ function App() {
             path: "studentsResults",
             element: <AllStudentResults />,
           },
+          {
+            path: 'setQuestions',
+            element : <SetQuestions/>
+          },
+      
           {
             path: "lecturerProfile",
             element: <LecturerProfile />,

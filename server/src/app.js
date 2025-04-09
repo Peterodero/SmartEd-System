@@ -13,6 +13,7 @@ const studentNumberRouter = require('./routesAndControllers/countStudents/studen
 const lecturerProfileRouter = require('./routesAndControllers/profile/lecRoute');
 const allStudentResultsRouter = require('./routesAndControllers/viewResults/lecViewResultsRoute');
 const { forgotPasswordRouter } = require('./routesAndControllers/forgotPassword/forgotPassword');
+const setQuestionRouter = require('./routesAndControllers/generateQuiz/questionsRouter');
 
 
 const app = express();
@@ -34,6 +35,6 @@ app.use(studentNumberRouter);
 app.use(lecturerProfileRouter);
 app.use(allStudentResultsRouter);
 app.use(forgotPasswordRouter);
-app.use("/api/questions", questionRoutes)
+app.use("/api/questions", setQuestionRouter)
 
 module.exports = app;
