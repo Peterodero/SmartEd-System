@@ -1,116 +1,55 @@
 import React, { useState } from 'react';
-import Sider from './Sider';
-
+import { Link } from "react-router-dom";
+import { FaChalkboardTeacher, FaBookOpen, FaUsers, FaChartBar, FaHome } from 'react-icons/fa';
+//import AllStudentResults from './StudentsResults';
+//import SetQuestions from './SetQuestions';
 
 const Dashboard = () => {
-
   return (
-    <div className="bg-gray-900 mb-0 border-b-amber-50 border">
- 
-      <div>
-    
-
-<div className="bg-gray-400 text-white font-sans p-4">
-      <header className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search"
-            className="bg-gray-800 rounded-full px-4 py-2 focus:outline-none focus:ring focus:border-blue-300"
-          />
-          <i className="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        </div>
-      </header>
-
-      <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-gray-800 rounded-lg p-4">
-          <h2 className="text-lg font-semibold">Total Students</h2>
-          <p className="text-3xl font-bold">2350</p>
-        </div>
-        <div className="bg-gray-800 rounded-lg p-4">
-          <h2 className="text-lg font-semibold">Total Courses</h2>
-          <p className="text-3xl font-bold">12</p>
-        </div>
-        <div className="bg-gray-800 rounded-lg p-4">
-          <h2 className="text-lg font-semibold">Average Rating</h2>
-          <p className="text-3xl font-bold">4.7</p>
-        </div>
-        <div className="bg-gray-800 rounded-lg p-4">
-          <h2 className="text-lg font-semibold">Total Classes</h2>
-          <p className="text-3xl font-bold">10</p>
-        </div>
-      </section>
-
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-        <div className="bg-gray-800 rounded-lg p-4">
-          <h2 className="text-lg font-semibold mb-4">Overal Performance </h2>
-          <div className="flex justify-center">
-            <canvas id="studentChart" width="250" height="250"></canvas>
-          </div>
-          <div className="flex justify-around mt-4">
-            <p>School Chart</p>
-          </div>
-        </div>
-        <div className="bg-gray-800 rounded-lg p-4">
-          <h2 className="text-lg font-semibold mb-4">Class Perormance</h2>
-          <div className="flex justify-around mt-68">
-            <p>Students Chart</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="bg-gray-800 rounded-lg p-4">
-          <h2 className="text-lg font-semibold mb-4">Course Stats</h2>
-          <table className="table-auto w-full">
-            <thead>
-              <tr className="border-b border-gray-700">
-                <th className="text-left p-2">Course</th>
-                <th className="text-left p-2">Category</th>
-                <th className="text-left p-2">Ratings</th>
-                <th className="text-left p-2">Visits</th>
-                <th className="text-left p-2">Classes</th>
-                <th className="text-left p-2">Students</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-gray-700">
-                <td className="p-2">Artificial Intelligence</td>
-                <td className="p-2">Computer Science</td>
-                <td className="p-2">4.7</td>
-                <td className="p-2">25,300</td>
-                <td className="p-2">6</td>
-                <td className="p-2">100</td>
-              </tr>
-              <tr className="border-b border-gray-700">
-                <td className="p-2">Robotics</td>
-                <td className="p-2">Computer Science</td>
-                <td className="p-2">4.5</td>
-                <td className="p-2">22,800</td>
-                <td className="p-2">4</td>
-                <td className="p-2">20</td>
-              </tr>
-              <tr className="border-b border-gray-700">
-                <td className="p-2">Cyber Security</td>
-                <td className="p-2">Computer Science</td>
-                <td className="p-2">4.2</td>
-                <td className="p-2">18,160</td>
-                <td className="p-2">4</td>
-                <td className="p-2">60</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="bg-gray-800 rounded-lg">
-          <h2 className="text-lg font-semibold mb-4">Top Students</h2>
-   
-        </div>
-      </section>
-    </div>
+    <main className='teacherDashboardMain' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2em' }}>
+      <div style={{ textAlign: 'center', marginBottom: '3em' }}>
+        <h1 style={{ fontSize: '2.8em', fontWeight: 'bold', color: '#3498db', marginBottom: '0.7em' }}>
+          <FaChalkboardTeacher style={{ marginRight: '0.5em' }} /> Empowering Educators, Inspiring Futures!
+        </h1>
+        <p style={{ fontSize: '1.8em', color: '#555', lineHeight: '1.7' }}>
+          Welcome to your dedicated dashboard, the central hub for shaping the next generation. Here, you have the tools to guide, assess, and inspire your students. Let's make learning impactful together!
+        </p>
       </div>
-    </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2em', width: '80%', maxWidth: '900px' }}>
+        <Link to='/lecturer/setQuestions' style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div style={{ backgroundColor: '#e6f7ff', padding: '20px', borderRadius: '8px', textAlign: 'center', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+            <FaBookOpen style={{ fontSize: '2.5em', color: '#2980b9', marginBottom: '0.5em' }} />
+            <h3 style={{ fontWeight: 'bold', color: '#2980b9', marginBottom: '0.3em' }}>Create Assessment</h3>
+            <p style={{ fontSize: '1.1em', color: '#777' }}>Design and deploy new exams and quizzes to evaluate student understanding.</p>
+            <button style={{ marginTop: '1em', padding: '0.8em 1.5em', borderRadius: '5px', border: 'none', backgroundColor: '#2980b9', color: 'white', cursor: 'pointer', fontSize: '1em' }}>Get Started</button>
+          </div>
+        </Link>
+
+        <Link to='/lecturer/studentsResults' style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div style={{ backgroundColor: '#f0f8ea', padding: '20px', borderRadius: '8px', textAlign: 'center', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+            <FaChartBar style={{ fontSize: '2.5em', color: '#2ecc71', marginBottom: '0.5em' }} />
+            <h3 style={{ fontWeight: 'bold', color: '#2ecc71', marginBottom: '0.3em' }}>Review Results</h3>
+            <p style={{ fontSize: '1.1em', color: '#777' }}>Access and analyze student performance data to gain insights and tailor your teaching.</p>
+            <button style={{ marginTop: '1em', padding: '0.8em 1.5em', borderRadius: '5px', border: 'none', backgroundColor: '#2ecc71', color: 'white', cursor: 'pointer', fontSize: '1em' }}>View Now</button>
+          </div>
+        </Link>
+        {}
+        <Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div style={{ backgroundColor: '#f8f8f8', padding: '20px', borderRadius: '8px', textAlign: 'center', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+            <FaHome style={{ fontSize: '2.5em', color: '#333', marginBottom: '0.5em' }} />
+            <h3 style={{ fontWeight: 'bold', color: '#333', marginBottom: '0.3em' }}>Back to Homepage</h3>
+            <p style={{ fontSize: '1.1em', color: '#777' }}>Return to the main platform interface.</p>
+            <button style={{ marginTop: '1em', padding: '0.8em 1.5em', borderRadius: '5px', border: 'none', backgroundColor: '#333', color: 'white', cursor: 'pointer', fontSize: '1em' }}>Go Back</button>
+          </div>
+        </Link>
+      </div>
+
+      <p className="mt-4" style={{ fontSize: '1.1em', color: '#777' }}>
+        Need assistance? Visit our <Link to="/lecturer/teacherHelp" style={{ color: '#3498db' }}>Help Center</Link> for guidance and support.
+      </p>
+    </main>
   );
-};
+}
 
 export default Dashboard;

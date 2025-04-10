@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import logo from '../assets/quiz-logo.png'
 
 
@@ -23,7 +23,11 @@ export default function Description(){
 			
 			</div>
 			
-			<button onClick={navigateHandler}>Get Started </button>
+			<div className="flex items-center justify-between">
+				<button onClick={navigateHandler}>Get Started </button>
+				<div><p>Need help?Click <Link to="/help">Help</Link></p></div>
+			</div>
+			
 		</main>
 	)
 }

@@ -5,9 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import './styles/App.css';
 import Dashboard from "./components/teachersDashboard/Dashboard";
 import StudentCount from "./components/teachersDashboard/StudentsNumber";
-import Navbar from './components/parentDashboard/domain/Navbar';
-import Dashbod from './components/parentDashboard/domain/Dashboard1'; // Corrected import
-import Talks from './components/parentDashboard/domain/Talks';
 
 import HomePage from './components/Home';
 import Login from "./components/Login";
@@ -28,6 +25,15 @@ import StudentRecommendations from "./components/studentDashboard/StudentRecomme
 import LecturerProfile from "./components/teachersDashboard/LecturerProfile";
 import AllStudentResults from "./components/teachersDashboard/ViewResults";
 import SetQuestions from "./components/teachersDashboard/SetQuestions";
+import AdminDashboard from "./components/adminDashboard/AdminsDashboard";
+import AdminProfile from "./components/adminDashboard/AdminProfile";
+import AllStudentRecommendations from "./components/teachersDashboard/AllStudentsRecommendations";
+import AdminLandingPage from "./components/adminDashboard/LandingPage";
+import RemoveAllUsers from "./components/adminDashboard/RemoveUsers";
+import RegisterLecturer from "./components/adminDashboard/RegisterLecturers";
+import HomeHelp from "./components/HomeHelp";
+import StudentHelp from "./components/studentDashboard/StudentHelp";
+import TeacherHelp from "./components/teachersDashboard/TeacherHelp";
 
 
 function App() {
@@ -42,6 +48,10 @@ function App() {
           index: true,
           element: <Description />,
         },
+        {
+          path: "help",
+          element:<HomeHelp/>
+        }
       ],
     },
     {
@@ -60,11 +70,7 @@ function App() {
       path: '/verification',
       element : <Verification/>
     },
-    {
-      path: '/setuestions',
-      element : <SetQuestions/>
-    },
-
+  
     {
       path: '/student',
       element: 
@@ -81,6 +87,10 @@ function App() {
             {
               path: 'newExam',
               element:<NewExam/>
+            },
+            {
+              path: 'studentHelp',
+              element:<StudentHelp/>
             },
             {
               path: 'viewResults',
@@ -104,6 +114,44 @@ function App() {
       
     },
     {
+      path: '/admin',
+      element:<ProtectedRoute/>,
+      children: [
+        {
+        element: <AdminDashboard/>,
+        path: '/admin',
+        children: [
+          {
+            index: true,
+            element: <AdminLandingPage />,
+          },
+          {
+            path: "adDashboard",
+            element: <AdminLandingPage />,
+          },
+          {
+            path: "students",
+            element: <StudentCount />,
+          },
+          {
+            path:"registerLecturers",
+            element:<RegisterLecturer/>
+          },
+          {
+            path: "removeUsers",
+            element: <RemoveAllUsers/>,
+          },
+  
+          {
+            path: "adminProfile",
+            element: <AdminProfile/>,
+          },
+        ],
+       },
+        
+      ]
+    },
+    {
       path: '/lecturer',
       element: <ProtectedRoute/>,
       children: [
@@ -124,9 +172,22 @@ function App() {
             element: <StudentCount />,
           },
           {
+              path: 'teacherHelp',
+              element:<TeacherHelp/>
+            },
+          {
             path: "studentsResults",
             element: <AllStudentResults />,
           },
+          {
+            path: 'setQuestions',
+            element : <SetQuestions/>
+          },
+          {
+            path: 'allRecommendations',
+            element : <AllStudentRecommendations/>
+          },
+      
           {
             path: "lecturerProfile",
             element: <LecturerProfile />,
@@ -136,23 +197,7 @@ function App() {
         
       ]
       
-    },
-
-    {
-      path: "/parent",
-      element: (
-        <div>
-          <Navbar onLogout={() => console.log("logout")} userName={"Kennah"} />
-          <Outlet />
-        </div>
-      ),
-      children: [
-        { index: true, element: <Dashbod /> },
-        { path: "dashboard", element: <Dashbod /> },
-        { path: "results", element: <StudentResults /> },
-        { path: "talks", element: <Talks /> },
-      ],
-    },
+    }
 
   ]
   );

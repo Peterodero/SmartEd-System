@@ -1,4 +1,4 @@
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 export default function Sidebar({sidebarOpen, toggleSidebar, handleDirectQuiz, handleStartLearn}){
 
   const navigate = useNavigate()
@@ -40,15 +40,20 @@ export default function Sidebar({sidebarOpen, toggleSidebar, handleDirectQuiz, h
               <div onClick={handleDirectQuiz} 
               className={sideButtonsStyle}>Start Quiz</div>
 
-              <div onClick={handleStartLearn} 
-              className={sideButtonsStyle}>Learn </div>
-
               <div className={sideButtonsStyle} onClick={handleViewResults}>View Results</div>
               
               <div className={sideButtonsStyle} onClick={handleCheckRecommendations}>Recommended Courses </div>
 
               <div className={sideButtonsStyle} onClick={handleViewProfile}>Profile Settings</div>
 
+              <p className='ml-1.5 mt-8'>Back to <Link to="/student" style={{color:'deepblue'}}>start page</Link></p>
+
+              <div className='studentLogout'>
+                <button onClick={()=>{
+                  localStorage.removeItem("token");
+                  navigate("/signIn"); 
+                }}>Logout</button>
+               </div>
             </div>
 
         </div>

@@ -1,17 +1,16 @@
 
 import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../Header";
-import Sider from "./Sider";
+import Sider from "./Sidebar";
 import { useState, useEffect } from "react";
 import menuIcon from "./Icons/menu-icon.gif"
-import notification from "../../assets/notification.png"
 import profile from "../../assets/profile.png"
 
 
 
-function TeachersDashboard() {
+function AdminDashboard() {
 
-    const [studentName, setStudentName] = useState("");
+    const [adminName, setAdminName] = useState("");
     const[userRole, setUserRole]= useState("")
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
@@ -19,7 +18,7 @@ function TeachersDashboard() {
 useEffect(() => {
     const name = localStorage.getItem("userName"); // this gets name from localStorage
     const role = localStorage.getItem("role");
-    if (name) setStudentName(name);
+    if (name) setAdminName(name);
     if(role) setUserRole(role)
   }, []);
   
@@ -28,8 +27,8 @@ useEffect(() => {
     };
 
     function handleLogout() {
-      localStorage.removeItem("token"); // Remove token
-      navigate("/signIn"); // Redirect to login
+      localStorage.removeItem("token");
+      navigate("/signIn"); 
   }
 
   return (
@@ -51,7 +50,7 @@ useEffect(() => {
                   )}
         
                 <div className='studentInfo'>
-                  <h2>{studentName}</h2>		
+                  <h2>{adminName}</h2>		
                   <img src={profile} alt="profile"/>		
                 </div>
             </header>
@@ -59,11 +58,11 @@ useEffect(() => {
         <div className={`transition-margin-left duration-300 transition-all flex flex-col right-0 p-6 ${isOpen ? ' ml-64' : 'ml-0'}`}>
           <Outlet/>
           <div className='studentLogout'>
-					  <button onClick={handleLogout}>Logout</button>
-				</div>
-        </div>
+                 <button onClick={handleLogout}>Logout</button>
+                </div>
+          </div>
     </>
   )
 }
 
-export default TeachersDashboard;
+export default AdminDashboard;
