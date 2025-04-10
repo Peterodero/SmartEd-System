@@ -55,6 +55,12 @@ const Sider = ({ isOpen, toggleSidebar }) => {
           ))}
         </nav>
         
+        <div className='studentLogout'>
+              <button onClick={()=>{
+                 localStorage.removeItem("token");
+                 navigate("/signIn"); 
+              }}>Logout</button>
+          </div>
       </div>
     </div>
   );

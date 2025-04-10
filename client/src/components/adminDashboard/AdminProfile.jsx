@@ -56,7 +56,7 @@ export default function AdminProfile() {
 
   return (
     <div className="max-w-xl mx-auto mt-8 p-6 bg-white shadow-md rounded-lg w-1/2">
-      <h2 className="text-2xl font-bold mb-4 text-center">Lecturer Profile</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Admin Profile</h2>
 
       <div className="space-y-4">
         <div>
@@ -83,7 +83,7 @@ export default function AdminProfile() {
           <p>{lecturer.role}</p>
         </div>
 
-        <div>
+        {/* <div>
           <label className="block font-medium">Department:</label>
           {editMode ? (
             <input
@@ -95,7 +95,7 @@ export default function AdminProfile() {
           ) : (
             <p>{lecturer.department || "Not set"}</p>
           )}
-        </div>
+        </div> */}
 
         {editMode ? (
           <button

@@ -28,6 +28,11 @@ import SetQuestions from "./components/teachersDashboard/SetQuestions";
 import AdminDashboard from "./components/adminDashboard/AdminsDashboard";
 import AdminProfile from "./components/adminDashboard/AdminProfile";
 import AllStudentRecommendations from "./components/teachersDashboard/AllStudentsRecommendations";
+import AdminLandingPage from "./components/adminDashboard/LandingPage";
+import RemoveAllUsers from "./components/adminDashboard/RemoveUsers";
+import RegisterLecturer from "./components/adminDashboard/RegisterLecturers";
+import HomeHelp from "./components/HomeHelp";
+import StudentHelp from "./components/studentDashboard/StudentHelp";
 
 
 function App() {
@@ -42,6 +47,10 @@ function App() {
           index: true,
           element: <Description />,
         },
+        {
+          path: "help",
+          element:<HomeHelp/>
+        }
       ],
     },
     {
@@ -79,6 +88,10 @@ function App() {
               element:<NewExam/>
             },
             {
+              path: 'studentHelp',
+              element:<StudentHelp/>
+            },
+            {
               path: 'viewResults',
               element:<StudentResults/>
             },
@@ -109,19 +122,23 @@ function App() {
         children: [
           {
             index: true,
-            element: <Dashboard />,
+            element: <AdminLandingPage />,
           },
           {
             path: "adDashboard",
-            element: <Dashboard />,
+            element: <AdminLandingPage />,
           },
           {
             path: "students",
             element: <StudentCount />,
           },
           {
-            path: "studentsResults",
-            element: <AllStudentResults />,
+            path:"registerLecturers",
+            element:<RegisterLecturer/>
+          },
+          {
+            path: "removeUsers",
+            element: <RemoveAllUsers/>,
           },
   
           {

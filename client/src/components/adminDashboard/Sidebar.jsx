@@ -26,8 +26,8 @@ const Sider = ({ isOpen, toggleSidebar }) => {
         <div className="flex items-center mb-8">
           <div className="bg-purple-600 rounded-full w-10 h-10 flex items-center justify-center mr-2"></div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold">Teacher</span>
-            <span className="text-xs text-gray-400">Teacher Dashboard</span>
+            <span className="text-sm font-semibold">Admin</span>
+            <span className="text-xs text-gray-400">Admin Dashboard</span>
           </div>
         </div>
 
@@ -35,9 +35,10 @@ const Sider = ({ isOpen, toggleSidebar }) => {
           {[
             { name: 'Dashboard', path: 'adDashboard' },
             { name: 'Registered Students', path: 'students' },
-            { name: 'Registered Lecturers', path: 'lecturers' },
+            {name: "Register Lecturers", path: 'registerLecturers'},
+            { name: 'Remove Users', path: 'removeUsers' },
             { name: 'Profile Settings', path: 'adminProfile' },
-            { name: 'Remove Members', path: 'remove' },
+
           ].map((item) => (
             <div
               key={item.name}
@@ -53,10 +54,12 @@ const Sider = ({ isOpen, toggleSidebar }) => {
           ))}
         </nav>
 
-        {/* Sidebar Footer */}
-        <div className="mt-8 border-t border-gray-700 pt-4">
-          <p className="text-sm text-gray-400">@onyangosoftwares</p>
-        </div>
+          <div className='studentLogout'>
+              <button onClick={()=>{
+                 localStorage.removeItem("token");
+                 navigate("/signIn"); 
+              }}>Logout</button>
+          </div>
       </div>
     </div>
   );

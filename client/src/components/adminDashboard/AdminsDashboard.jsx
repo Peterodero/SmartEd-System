@@ -10,7 +10,7 @@ import profile from "../../assets/profile.png"
 
 function AdminDashboard() {
 
-    const [studentName, setStudentName] = useState("");
+    const [adminName, setAdminName] = useState("");
     const[userRole, setUserRole]= useState("")
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ function AdminDashboard() {
 useEffect(() => {
     const name = localStorage.getItem("userName"); // this gets name from localStorage
     const role = localStorage.getItem("role");
-    if (name) setStudentName(name);
+    if (name) setAdminName(name);
     if(role) setUserRole(role)
   }, []);
   
@@ -27,8 +27,8 @@ useEffect(() => {
     };
 
     function handleLogout() {
-      localStorage.removeItem("token"); // Remove token
-      navigate("/signIn"); // Redirect to login
+      localStorage.removeItem("token");
+      navigate("/signIn"); 
   }
 
   return (
@@ -50,7 +50,7 @@ useEffect(() => {
                   )}
         
                 <div className='studentInfo'>
-                  <h2>{studentName}</h2>		
+                  <h2>{adminName}</h2>		
                   <img src={profile} alt="profile"/>		
                 </div>
             </header>
@@ -60,7 +60,7 @@ useEffect(() => {
           <div className='studentLogout'>
                  <button onClick={handleLogout}>Logout</button>
                 </div>
-        </div>
+          </div>
     </>
   )
 }

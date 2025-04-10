@@ -15,6 +15,10 @@ const allStudentResultsRouter = require('./routesAndControllers/viewResults/lecV
 const { forgotPasswordRouter } = require('./routesAndControllers/forgotPassword/forgotPassword');
 const setQuestionRouter = require('./routesAndControllers/generateQuiz/questionsRouter');
 const lecturerRecommendationRouter = require('./routesAndControllers/recommendations/lecRecommendation.route');
+const adminRouter = require('./routesAndControllers/evaluateAuth/adminRoute');
+const adminDeleteUserRouter = require('./routesAndControllers/deleteAndAddUsers/adminDelete.route');
+const adminGetUsersRouter = require('./routesAndControllers/deleteAndAddUsers/adminGetUsers.route');
+const registerLecRouter = require('./routesAndControllers/registerLecturers/adminRegLec.router');
 
 
 const app = express();
@@ -25,6 +29,10 @@ app.use(cors({
 }));
 
 app.use('/auth', authRoutes);
+app.use(adminRouter);
+app.use(adminGetUsersRouter);
+app.use(adminDeleteUserRouter);
+app.use(registerLecRouter);
 app.use(studentRoute);
 app.use(genQuizRouter);
 app.use(evaluateQuizRouter);
@@ -37,7 +45,7 @@ app.use(studentNumberRouter);
 app.use(lecturerProfileRouter);
 app.use(allStudentResultsRouter);
 app.use(forgotPasswordRouter);
-app.use("/api/questions", setQuestionRouter)
+app.use("/api/questions", setQuestionRouter);
 
 module.exports = app;
 
