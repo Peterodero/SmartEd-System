@@ -40,16 +40,13 @@ export default function Sidebar({sidebarOpen, toggleSidebar, handleDirectQuiz, h
               <div onClick={handleDirectQuiz} 
               className={sideButtonsStyle}>Start Quiz</div>
 
-              <div onClick={handleStartLearn} 
-              className={sideButtonsStyle}>Learn </div>
-
               <div className={sideButtonsStyle} onClick={handleViewResults}>View Results</div>
               
               <div className={sideButtonsStyle} onClick={handleCheckRecommendations}>Recommended Courses </div>
 
               <div className={sideButtonsStyle} onClick={handleViewProfile}>Profile Settings</div>
 
-              <p className='ml-1.5 mt-8'>Back to <Link to="/student">start page</Link></p>
+              <p className='ml-1.5 mt-8'>Back to <Link to="/student" style={{color:'deepblue'}}>start page</Link></p>
 
               <div className='studentLogout'>
                 <button onClick={()=>{

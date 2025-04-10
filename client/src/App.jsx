@@ -33,6 +33,7 @@ import RemoveAllUsers from "./components/adminDashboard/RemoveUsers";
 import RegisterLecturer from "./components/adminDashboard/RegisterLecturers";
 import HomeHelp from "./components/HomeHelp";
 import StudentHelp from "./components/studentDashboard/StudentHelp";
+import TeacherHelp from "./components/teachersDashboard/TeacherHelp";
 
 
 function App() {
@@ -170,6 +171,10 @@ function App() {
             path: "students",
             element: <StudentCount />,
           },
+          {
+              path: 'teacherHelp',
+              element:<TeacherHelp/>
+            },
           {
             path: "studentsResults",
             element: <AllStudentResults />,

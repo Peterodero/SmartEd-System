@@ -30,7 +30,8 @@ export default function StudentResults() {
   }, [studentId]);
 
   if (loading) return <p className="mt-10">Loading scores...</p>;
-  if (error) return <p className="mt-10">It seems like you have not done any quiz</p>;
+  if (error) return  <p className="mt-10"  style={{ fontWeight: 'bold', color: 'black', padding: '0.3em 0.6em', borderRadius: '5px', backgroundColor: 'lightblue' }}>Sorry!! To see results attempt Quiz.</p>;
+    
 
   return (
     <div className="mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg w-2/3">
