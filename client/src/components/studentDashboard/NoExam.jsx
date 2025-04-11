@@ -22,7 +22,7 @@ export default function NoExam() {
           Proceed <Link to={'viewResults'} style={{ fontWeight: 'bold', color: 'darkblue', padding: '0.3em 0.6em', borderRadius: '5px', backgroundColor: 'lightblue' }}>here</Link> to view your results
         </p>
         <p className="m-1" style={{ fontSize: '1.1em' }}>
-          Click <Link to={'/'} style={{ fontWeight: 'bold', color: 'darkblue', padding: '0.3em 0.6em', borderRadius: '5px', backgroundColor: 'lightblue' }}>here</Link> to proceed to homepage
+          Click <Link to={'/'} style={{ fontWeight: 'bold', color: 'darkblue', padding: '0.3em 0.6em', borderRadius: '6px', backgroundColor: 'lightblue' }}>here</Link> to proceed to homepage
         </p>
         <p className="mt-4">Need help? Click here for <Link to="studentHelp">help</Link></p>
       </div>
