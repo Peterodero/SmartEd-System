@@ -19,7 +19,7 @@ export default function Sidebar({sidebarOpen, toggleSidebar, handleDirectQuiz, h
     return(
         <div  className={`flex flex-col  gap-4 fixed top-0 left-0 h-full text-white transition-all duration-300 ease-in-out ${
             sidebarOpen ? 'w-64' : 'w-0'
-          } overflow-x-hidden bg-gray-600`}>
+          } overflow-x-hidden bg-gray-700`}>
 
            <div className="flex flex-row">
               <main>
@@ -50,9 +50,11 @@ export default function Sidebar({sidebarOpen, toggleSidebar, handleDirectQuiz, h
 
               <div className={sideButtonsStyle} onClick={handleViewProfile}>Profile Settings</div>
 
-              <p className='ml-1.5 mt-8'>Back to <Link to="/student">start page</Link></p>
+              <p className='ml-1.5 mt-8'>
+                  Back to <Link to="/student" className="text-blue-400">start page</Link>
+              </p>
 
-              <div className='studentLogout'>
+              <div className='studentLogout' style={{colour: 'blue'}}>
                 <button onClick={()=>{
                   localStorage.removeItem("token");
                   navigate("/signIn"); 

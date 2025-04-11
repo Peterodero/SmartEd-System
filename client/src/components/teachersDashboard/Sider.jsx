@@ -14,7 +14,7 @@ const Sider = ({ isOpen, toggleSidebar }) => {
     <div
       className={`fixed top-0 left-0 h-full text-white transition-all duration-300 ease-in-out ${
         isOpen ? 'w-64' : 'w-0'
-      } overflow-x-hidden bg-gray-800`}
+      } overflow-x-hidden bg-gray-700`}
     >
       {/* Close Button */}
       <div onClick={toggleSidebar}  className=" bg-red-400 w-8 h-8 pb-4 hover:cursor-pointer absolute top-4 right-4 text-xl text-white text-center font-bold  rounded">
