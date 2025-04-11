@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
 import { useMutation } from "@tanstack/react-query";
 
 import FormInput from "./FormInput";
@@ -10,7 +9,7 @@ import { sendSignUpData } from "../util/http";
 export default function SignUp() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false); // Added
+  const [loading, setLoading] = useState(false);
 
   const {
     handleSignUpChange,
@@ -28,20 +27,26 @@ export default function SignUp() {
   const { mutate } = useMutation({
     mutationFn: sendSignUpData,
     onSuccess: () => {
-      setLoading(false); // Stop loading on success
+      setLoading(false);
       navigate("/signIn");
     },
     onError: (error) => {
-      setLoading(false); // Stop loading on error
-      setErrorMessage(error.message || "Account already exist. Please try again.");
+      setLoading(false);
+      setErrorMessage(error.message || "Account already exists. Please try again.");
     },
   });
 
   function handleSubmit(event) {
     event.preventDefault();
-
     handleValidateSignUp();
-    if (passWordNotMatch) {
+
+    if (
+      nameIsInvalid ||
+      emailIsInvalid ||
+      firstPasswordIsInvalid ||
+      secondPasswordIsInvalid ||
+      passWordNotMatch
+    ) {
       return;
     }
 
@@ -51,10 +56,9 @@ export default function SignUp() {
       password: signUpFormData.firstPassword,
       role: signUpFormData.role,
     };
-    console.log(signUpData);
 
     setErrorMessage("");
-    setLoading(true); // Start loading
+    setLoading(true);
     mutate(signUpData);
   }
 
@@ -72,9 +76,9 @@ export default function SignUp() {
           id="name"
           label="Enter Username:"
           onChange={handleSignUpChange}
-          onBlur={() => handleSignUpBlur('name')}
+          onBlur={() => handleSignUpBlur("name")}
           value={signUpFormData.name}
-          error={nameIsInvalid && "Please input a valid name"}
+          error={nameIsInvalid && "Name must contain at least two words, each starting with a capital letter, using only alphabetic characters"}
         />
 
         <FormInput 
@@ -85,9 +89,9 @@ export default function SignUp() {
           id="email"
           label="Enter Email:"
           onChange={handleSignUpChange}
-          onBlur={() => handleSignUpBlur('email')}
+          onBlur={() => handleSignUpBlur("email")}
           value={signUpFormData.email}
-          error={emailIsInvalid && "Please input the correct email address"}
+          error={emailIsInvalid && "Email must be lowercase, valid format, and not start with a number"}
         />
 
         <FormInput
@@ -98,9 +102,9 @@ export default function SignUp() {
           id="firstPassword"
           label="Enter Password:"
           onChange={handleSignUpChange}
-          onBlur={() => handleSignUpBlur('firstPassword')}
+          onBlur={() => handleSignUpBlur("firstPassword")}
           value={signUpFormData.firstPassword}
-          error={firstPasswordIsInvalid && "Please input the correct password"}
+          error={firstPasswordIsInvalid && "Password must be at least 6 characters"}
         />
 
         <FormInput
@@ -111,9 +115,15 @@ export default function SignUp() {
           id="secondPassword"
           label="Confirm Password:"
           onChange={handleSignUpChange}
-          onBlur={() => handleSignUpBlur('secondPassword')}
+          onBlur={() => handleSignUpBlur("secondPassword")}
           value={signUpFormData.secondPassword}
-          error={secondPasswordIsInvalid && "Please input the correct password"}
+          error={
+            secondPasswordIsInvalid
+              ? "Password must be at least 6 characters"
+              : passWordNotMatch
+              ? "Passwords do not match"
+              : ""
+          }
         />	
 
         <div className="flex justify-end mt-1">
@@ -148,4 +158,3 @@ export default function SignUp() {
     </div>
   );
 }
-

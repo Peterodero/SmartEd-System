@@ -198,3 +198,39 @@ dialog[open] {
   animation: fadeIn 0.3s ease-out;
 }
 
+
+.resetform{
+  background-color: rgb(114, 114, 114);
+  border-radius: 5px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+
+  gap: 8px;
+}
+.resetform-div{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: start;
+}
+.resetform-div input{
+  padding: 9px;
+  border-radius: 5px;
+  width: 95%;
+
+}
+.resetform-div button{
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  width: 95%;
+
+}
+
+.resetinvalid{
+  color: rgb(252, 59, 59);
+  font-size: small;
+  margin: 0px;
+}

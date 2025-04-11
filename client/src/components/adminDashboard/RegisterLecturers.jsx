@@ -12,7 +12,6 @@ const RegisterLecturer = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  // Add more common TLDs
   const validTLDs = [
     '.com', '.org', '.net', '.edu', '.gov', '.io', '.co', '.us',
     '.ac', '.ke', '.uk', '.ca', '.de', '.fr', '.jp', '.au',
@@ -24,6 +23,7 @@ const RegisterLecturer = () => {
 
   const validateEmail = (email) => {
     if (!validator.isEmail(email)) return false;
+    if (/[A-Z]/.test(email)) return false; // Reject uppercase
     const domain = email.split('@')[1];
     return validTLDs.some(tld => domain.endsWith(tld));
   };
@@ -58,11 +58,6 @@ const RegisterLecturer = () => {
 
     if (!validatePassword(password)) {
       setError('Password must be at least 6 characters long and contain at least one number and one special character');
-      return;
-    }
-
-    if (!department.trim()) {
-      setError('Department cannot be empty');
       return;
     }
 
@@ -169,15 +164,24 @@ const RegisterLecturer = () => {
 
           {/* Department */}
           <div className="mb-4">
-            <label className="block text-sm font-semibold text-gray-700" htmlFor="department">Department</label>
-            <input
-              type="text"
-              id="department"
-              value={department}
-              onChange={(e) => setDepartment(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded mt-1"
-              required
-            />
+            <label className="block text-sm font-semibold text-gray-700">Department</label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={department}
+                readOnly
+                className="w-full p-2 border border-gray-300 rounded mt-1 bg-gray-100 cursor-not-allowed"
+              />
+              <select
+                onChange={(e) => setDepartment(e.target.value)}
+                className="p-2 border border-gray-300 rounded mt-1"
+                required
+              >
+                <option value="">Select</option>
+                <option value="IT">IT</option>
+                <option value="Computer Science">Computer Science</option>
+              </select>
+            </div>
           </div>
 
           {/* Submit Button */}

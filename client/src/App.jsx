@@ -33,6 +33,8 @@ import RemoveAllUsers from "./components/adminDashboard/RemoveUsers";
 import RegisterLecturer from "./components/adminDashboard/RegisterLecturers";
 import HomeHelp from "./components/HomeHelp";
 import StudentHelp from "./components/studentDashboard/StudentHelp";
+import LecHelp from "./components/teachersDashboard/LecHelp";
+import ResetPassword from "./components/ResetPassword";
 
 
 function App() {
@@ -64,6 +66,10 @@ function App() {
     {
       path: '/forgotPassword',
       element: <ForgotPassword />,
+    },
+    {
+      path: '/resetPassword',
+      element: <ResetPassword />,
     },
     {
       path: '/verification',
@@ -170,9 +176,14 @@ function App() {
             path: "students",
             element: <StudentCount />,
           },
+          
           {
             path: "studentsResults",
             element: <AllStudentResults />,
+          },
+          {
+            path: "lecHelp",
+            element: <LecHelp />,
           },
           {
             path: 'setQuestions',

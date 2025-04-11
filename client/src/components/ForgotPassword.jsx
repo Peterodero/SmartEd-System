@@ -30,18 +30,19 @@ export default function ForgotPassword(){
 
         async function handleSubmit(event){
         event.preventDefault();
+        navigate("/resetPassword")
         setShowVerification(true)
         setIsSending(true);
         setMessage("");
         setError("");
 
         try {
-            const response = await fetch("http://localhost:3000/forgot-password", {
+            const response = await fetch("https://backend-smarted.onrender.com:3000/forgot-password", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
               },
-              body: JSON.stringify({ email: enteredEmail })
+              body: JSON.stringify(enteredEmail)
             });
       
             const data = await response.json();

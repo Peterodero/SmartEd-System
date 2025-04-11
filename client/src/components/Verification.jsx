@@ -1,34 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Verification(){
-    const [remainingTime, setRemainingTime] = useState(10000); 
-    const [isVisible, setIsVisible] = useState(true);
-    const timer = useRef()
 
-    useEffect(()=>{
+    const navigate = useNavigate()
 
-        if (remainingTime <= 0) {
-            setIsVisible(false);
-            return;
-          }
-
-        timer.current = setInterval(()=>{
-            setRemainingTime((prevRemainingTime) => prevRemainingTime - 1000)
-           
-        }, 1000);
-
-        return () => {
-            clearInterval(timer.current);
-          };
-
-    }, [remainingTime])
-
-    const time = remainingTime/1000
+    function handleLogin(){
+        navigate("/signIn")
+    }
 
     return(
         <div  className="flex flex-col items-center gap-4 mt-10 bg-stone-50 ml-25 mr-25 p-6">
             <h1>Reset link sent to your email</h1>
-           {isVisible && <p className=" ">{time}</p>} 
+            <p>Click the link sent to update your password and click the below button to login again</p>
+            <button onClick={handleLogin}>Login</button>
         </div>
     )
 }

@@ -4,6 +4,8 @@ export default function LecturerProfile() {
   const [lecturer, setLecturer] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [updatedData, setUpdatedData] = useState({});
+  const [nameError, setNameError] = useState("");
+  const [departmentError, setDepartmentError] = useState("");
 
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -27,11 +29,50 @@ export default function LecturerProfile() {
     fetchProfile();
   }, [userId, token]);
 
+  // Validate name: must be at least two words, starting with capital letters
+  const validateName = (name) => {
+    const pattern = /^([A-Z][a-z]+)(\s[A-Z][a-z]+)+$/;
+    return pattern.test(name.trim());
+  };
+
+  // Validate department: It should be either "IT" or "Computer Science"
+  const validateDepartment = (department) => {
+    return department === "IT" || department === "Computer Science";
+  };
+
   const handleChange = (e) => {
-    setUpdatedData({ ...updatedData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setUpdatedData({ ...updatedData, [name]: value });
+
+    // Validate fields dynamically
+    if (name === "name" && !validateName(value)) {
+      setNameError("Name must have at least two words, each starting with a capital letter.");
+    } else {
+      setNameError("");
+    }
+
+    if (name === "department" && !validateDepartment(value)) {
+      setDepartmentError("Department must be either IT or Computer Science.");
+    } else {
+      setDepartmentError("");
+    }
   };
 
   const handleSave = async () => {
+    // Check if name and department are valid before saving
+    const isNameValid = validateName(updatedData.name);
+    const isDepartmentValid = validateDepartment(updatedData.department);
+
+    if (!isNameValid || !isDepartmentValid) {
+      if (!isNameValid) {
+        setNameError("Name must have at least two words, each starting with a capital letter.");
+      }
+      if (!isDepartmentValid) {
+        setDepartmentError("Department must be either IT or Computer Science.");
+      }
+      return;
+    }
+
     try {
       const res = await fetch(`http://localhost:3000/users/${userId}`, {
         method: "PUT",
@@ -62,12 +103,15 @@ export default function LecturerProfile() {
         <div>
           <label className="block font-medium">Name:</label>
           {editMode ? (
-            <input
-              name="name"
-              value={updatedData.name}
-              onChange={handleChange}
-              className="input border p-2 w-full"
-            />
+            <>
+              <input
+                name="name"
+                value={updatedData.name}
+                onChange={handleChange}
+                className="input border p-2 w-full"
+              />
+              {nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
+            </>
           ) : (
             <p>{lecturer.name}</p>
           )}
@@ -86,12 +130,18 @@ export default function LecturerProfile() {
         <div>
           <label className="block font-medium">Department:</label>
           {editMode ? (
-            <input
-              name="department"
-              value={updatedData.department || ""}
-              onChange={handleChange}
-              className="input border p-2 w-full"
-            />
+            <>
+              <select
+                name="department"
+                value={updatedData.department || ""}
+                onChange={handleChange}
+                className="input border p-2 w-full"
+              >
+                <option value="IT">IT</option>
+                <option value="Computer Science">Computer Science</option>
+              </select>
+              {departmentError && <p className="text-red-500 text-sm mt-1">{departmentError}</p>}
+            </>
           ) : (
             <p>{lecturer.department || "Not set"}</p>
           )}

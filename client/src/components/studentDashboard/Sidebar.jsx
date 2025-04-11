@@ -39,9 +39,10 @@ export default function Sidebar({sidebarOpen, toggleSidebar, handleDirectQuiz, h
             <div  className={`flex flex-col gap-3 block py-2 px-4 rounded-md cursor-pointer transition-colors duration-200 sidebarDiv1`}>
               <div onClick={handleDirectQuiz} 
               className={sideButtonsStyle}>Start Quiz</div>
-
+              
+{/* 
               <div onClick={handleStartLearn} 
-              className={sideButtonsStyle}>Learn </div>
+              className={sideButtonsStyle}>Learn </div> */}
 
               <div className={sideButtonsStyle} onClick={handleViewResults}>View Results</div>
               

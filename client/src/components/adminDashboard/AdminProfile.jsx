@@ -4,6 +4,7 @@ export default function AdminProfile() {
   const [lecturer, setLecturer] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [updatedData, setUpdatedData] = useState({});
+  const [nameError, setNameError] = useState("");
 
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -27,11 +28,35 @@ export default function AdminProfile() {
     fetchProfile();
   }, [userId, token]);
 
+  const validateName = (name) => {
+    // Must have at least two words, letters only, each word starts with capital
+    const namePattern = /^([A-Z][a-z]+)(\s[A-Z][a-z]+)+$/;
+    return namePattern.test(name.trim());
+  };
+
   const handleChange = (e) => {
-    setUpdatedData({ ...updatedData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setUpdatedData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "name") {
+      if (!validateName(value)) {
+        setNameError(
+          "Name must have at least two words, only letters, and each start with a capital letter."
+        );
+      } else {
+        setNameError("");
+      }
+    }
   };
 
   const handleSave = async () => {
+    if (!validateName(updatedData.name)) {
+      setNameError(
+        "Name must have at least two words, only letters, and each start with a capital letter."
+      );
+      return;
+    }
+
     try {
       const res = await fetch(`http://localhost:3000/users/${userId}`, {
         method: "PUT",
@@ -46,6 +71,7 @@ export default function AdminProfile() {
         const data = await res.json();
         setLecturer(data);
         setEditMode(false);
+        setNameError("");
       }
     } catch (error) {
       console.error("Update failed", error);
@@ -62,12 +88,17 @@ export default function AdminProfile() {
         <div>
           <label className="block font-medium">Name:</label>
           {editMode ? (
-            <input
-              name="name"
-              value={updatedData.name}
-              onChange={handleChange}
-              className="input border p-2 w-full"
-            />
+            <>
+              <input
+                name="name"
+                value={updatedData.name}
+                onChange={handleChange}
+                className="input border p-2 w-full"
+              />
+              {nameError && (
+                <p className="text-red-500 text-sm mt-1">{nameError}</p>
+              )}
+            </>
           ) : (
             <p>{lecturer.name}</p>
           )}
@@ -82,20 +113,6 @@ export default function AdminProfile() {
           <label className="block font-medium">Role:</label>
           <p>{lecturer.role}</p>
         </div>
-
-        {/* <div>
-          <label className="block font-medium">Department:</label>
-          {editMode ? (
-            <input
-              name="department"
-              value={updatedData.department || ""}
-              onChange={handleChange}
-              className="input border p-2 w-full"
-            />
-          ) : (
-            <p>{lecturer.department || "Not set"}</p>
-          )}
-        </div> */}
 
         {editMode ? (
           <button
