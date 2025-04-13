@@ -3,16 +3,23 @@ import FormInput from "./FormInput";
 import useInput from "../hooks/useInput.js";
 import { useMutation } from "@tanstack/react-query";
 import { sendSignInData } from "../util/http.js";
-
-let contentLog;
+import { useState, useEffect } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState("");
 
   const {
-    mutate,
-    isLoading,
-  } = useMutation({
+    handleLoginChange,
+    handleLoginBlur,
+    loginFormData,
+    loginEmailIsInvalid,
+    loginPasswordIsInvalid,
+    content,
+    handleValidateSignIn,
+  } = useInput();
+
+  const { mutate, isPending } = useMutation({
     mutationFn: sendSignInData,
     onSuccess: (data) => {
       localStorage.setItem("token", data.token);
@@ -29,40 +36,32 @@ export default function Login() {
       }
     },
     onError: (error) => {
-      contentLog = <p className="text-red-600">Wrong credentials. Try creating an account</p>;
-      console.error("failed to sign In", error);
+      setLoginError("Wrong credentials. Try creating an account.");
+      console.error("Failed to sign in:", error);
     },
   });
-
-  const {
-    handleLoginChange,
-    handleLoginBlur,
-    loginFormData,
-    loginEmailIsInvalid,
-    loginPasswordIsInvalid,
-    content,
-    handleValidateSignIn,
-  } = useInput();
 
   function handleSubmitLogin(event) {
     event.preventDefault();
 
-    // Check for email validation error
     if (loginEmailIsInvalid) {
-      setContent("Please enter a valid email");
+      setLoginError("Please enter a valid email");
       return;
     }
 
     handleValidateSignIn();
-
     const signInData = {
       email: loginFormData.email,
       password: loginFormData.password,
     };
 
-    console.log(signInData);
     mutate(signInData);
   }
+
+  // Reset error when user types again
+  useEffect(() => {
+    setLoginError("");
+  }, [loginFormData.email, loginFormData.password]);
 
   return (
     <div className="sign flex flex-column gap-2 mt-2">
@@ -94,13 +93,14 @@ export default function Login() {
           error={loginPasswordIsInvalid && "Please enter a valid password"}
         />
 
-        <p className="inputError">{content}</p>
-
-        {contentLog}
+        {/* Error Display */}
+        {loginError && (
+          <p className="text-red-600">{loginError}</p>
+        )}
 
         <div>
-          <button className="submit" type="submit" disabled={isLoading}>
-            {isLoading ? (
+          <button className="submit" type="submit" disabled={isPending}>
+            {isPending ? (
               <span className="flex items-center gap-2">
                 <span className="loader w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></span>
                 Signing in...
@@ -119,3 +119,4 @@ export default function Login() {
     </div>
   );
 }
+

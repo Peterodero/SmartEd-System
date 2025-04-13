@@ -37,12 +37,12 @@ export default function ForgotPassword(){
         setError("");
 
         try {
-            const response = await fetch("https://backend-smarted.onrender.com:3000/forgot-password", {
+            const response = await fetch("http://localhost:3000/forgot-password", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
               },
-              body: JSON.stringify(enteredEmail)
+            body: JSON.stringify({email:enteredEmail})
             });
       
             const data = await response.json();

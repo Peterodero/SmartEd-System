@@ -1,7 +1,6 @@
-const express = require('express')
-const nodemailer = require('nodemailer')
+const express = require('express');
+const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const User = require('../../models/user.model');
@@ -9,68 +8,89 @@ const User = require('../../models/user.model');
 const forgotPasswordRouter = express.Router();
 const resetPasswordRouter = express.Router();
 
-
+// Email transporter setup
 const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
+  service: 'Gmail',
+  auth: {
+    user: process.env.EMAIL_USER,   
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
-// Route: Forgot Password
-forgotPasswordRouter.post('/forgot-password', async(req, res) => {
-    const { email } = req.body;
-    console.log(req.body)
+// Generate 6-digit OTP
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString(); // Ensures 6 digits
+}
+
+//Forgot Password Route (send OTP)
+forgotPasswordRouter.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+
+  try {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
+    const otp = generateOTP();
+    const otpExpiration = new Date(Date.now() + 10 * 60 * 1000); // Expires in 10 minutes
 
-    const resetLink = `${process.env.RESET_APP_URL}/reset-password/${token}`;
+    user.resetOTP = otp;
+    user.otpExpires = otpExpiration;
+    await user.save();
 
-
+    // Send OTP email
     await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: 'Password Reset',
-        html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'SmartEd Password Reset OTP',
+      html: `<p>Your OTP to reset your password is: <strong>${otp}</strong></p>
+             <p>This OTP is valid for 10 minutes.</p>`,
     });
 
-    console.log("Link sent")
-    res.json({ message: 'Password reset email sent' });
+    res.json({ message: 'OTP sent to your email' });
+  } catch (err) {
+    console.error('Error sending OTP:', err);
+    res.status(500).json({ message: 'Failed to send OTP' });
+  }
 });
 
+// Reset Password Route (with OTP)
 resetPasswordRouter.post('/reset-password', async (req, res) => {
-  const { password, token } = req.body;
+  const { otp, password } = req.body;
 
-  if (!token || !password) {
-    return res.status(400).json({ message: 'Token and password are required' });
+  if (!otp || !password) {
+    return res.status(400).json({ message: 'OTP and password are required' });
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await User.findOne({ resetOTP: otp });
 
-    const updatedUser = await User.findByIdAndUpdate(
-      decoded.userId,
-      { password: hashedPassword },
-      { new: true }
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid OTP' });
     }
+
+    if (!user.otpExpires || user.otpExpires < new Date()) {
+      return res.status(400).json({ message: 'OTP has expired' });
+    }
+
+    // Hash and update password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+
+    // Invalidate used OTP
+    user.resetOTP = undefined;
+    user.otpExpires = undefined;
+
+    await user.save();
 
     res.json({ message: 'Password updated successfully' });
   } catch (err) {
     console.error('Error resetting password:', err);
-    res.status(400).json({ message: 'Invalid or expired token' });
+    res.status(500).json({ message: 'Failed to reset password' });
   }
 });
 
-
 module.exports = {
-    forgotPasswordRouter,
-    resetPasswordRouter
-}
+  forgotPasswordRouter,
+  resetPasswordRouter,
+};
+
