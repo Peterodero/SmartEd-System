@@ -11,6 +11,7 @@ const studentProfileRouter = require('./routesAndControllers/profile/studentProf
 const recommendationRouter = require('./routesAndControllers/recommendations/courseRecommendation.router')
 const studentNumberRouter = require('./routesAndControllers/countStudents/studentNumber.route');
 const lecturerProfileRouter = require('./routesAndControllers/profile/lecRoute');
+const lecturerPasswordRouter = require('./routesAndControllers/profile/lecPassword.route');
 const allStudentResultsRouter = require('./routesAndControllers/viewResults/lecViewResultsRoute');
 const { forgotPasswordRouter, resetPasswordRouter } = require('./routesAndControllers/forgotPassword/forgotPassword');
 const setQuestionRouter = require('./routesAndControllers/generateQuiz/questionsRouter');
@@ -19,6 +20,7 @@ const adminRouter = require('./routesAndControllers/evaluateAuth/adminRoute');
 const adminDeleteUserRouter = require('./routesAndControllers/deleteAndAddUsers/adminDelete.route');
 const adminGetUsersRouter = require('./routesAndControllers/deleteAndAddUsers/adminGetUsers.route');
 const registerLecRouter = require('./routesAndControllers/registerLecturers/adminRegLec.router');
+const adminAddAdminRouter = require('./routesAndControllers/registerLecturers/adminRegisterAdmin');
 
 
 const app = express();
@@ -32,6 +34,7 @@ app.use('/auth', authRoutes);
 app.use(adminRouter);
 app.use(adminGetUsersRouter);
 app.use(adminDeleteUserRouter);
+app.use(adminAddAdminRouter)
 app.use(registerLecRouter);
 app.use(studentRoute);
 app.use(genQuizRouter);
@@ -43,6 +46,7 @@ app.use(recommendationRouter);
 app.use(lecturerRecommendationRouter);
 app.use(studentNumberRouter);
 app.use(lecturerProfileRouter);
+app.use(lecturerPasswordRouter);
 app.use(allStudentResultsRouter);
 app.use(forgotPasswordRouter);
 app.use(resetPasswordRouter)
@@ -50,11 +54,11 @@ app.use("/api/questions", setQuestionRouter);
 
 module.exports = app;
 
-// GEMINI_API_KEY = AIzaSyBsm7086P - LUdJ61s07sIR - v7PApUAJqjI
-// MONGO_URL = mongodb + srv: //peterodero450:j3MCnkxCAQk8BtZN@edcluster.t5egyrg.mongodb.net/?retryWrites=true&w=majority&appName=EdCluster 
-//     PORT = 3000
+// GEMINI_API_KEY = AIzaSyBsm7086P-LUdJ61s07sIR-v7PApUAJqjI
+// MONGO_URL = mongodb+srv://peterodero450:j3MCnkxCAQk8BtZN@edcluster.t5egyrg.mongodb.net/?retryWrites=true&w=majority&appName=EdCluster 
+// PORT = 3000
 // JWT_SECRET = aea376b019ebe5a87a122f805b0a2874b5c30c267e10c0a4e3df5ff4468929021c6b965d887659fe341eb9b007b2491faed0758238573e616bb542907f3d9653
-// GEMINI_API_URL = https: //generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent
-//     EMAIL_USER =
-//     EMAIL_PASS =
-//     RESET_APP_URL = https: //password-reset-smart-ed.vercel.app
+// GEMINI_API_URL = https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent
+// EMAIL_USER = peterodero450@gmail.com
+// EMAIL_PASS = ajaj ilde flmu ypnz
+// RESET_APP_URL = https://password-reset-smart-ed.vercel.app

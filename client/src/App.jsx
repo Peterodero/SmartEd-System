@@ -35,6 +35,7 @@ import HomeHelp from "./components/HomeHelp";
 import StudentHelp from "./components/studentDashboard/StudentHelp";
 import TeacherHelp from "./components/teachersDashboard/TeacherHelp";
 import ResetPassword from "./components/ResetPassword";
+import AddAdmin from "./components/adminDashboard/AddAdmin";
 
 
 function App() {
@@ -141,6 +142,10 @@ function App() {
           {
             path:"registerLecturers",
             element:<RegisterLecturer/>
+          },
+          {
+            path: "addAdmin",
+            element: <AddAdmin/>
           },
           {
             path: "removeUsers",

@@ -7,6 +7,12 @@ export default function LecturerProfile() {
   const [nameError, setNameError] = useState("");
   const [departmentError, setDepartmentError] = useState("");
 
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
@@ -29,13 +35,11 @@ export default function LecturerProfile() {
     fetchProfile();
   }, [userId, token]);
 
-  // Validate name: must be at least two words, starting with capital letters
   const validateName = (name) => {
     const pattern = /^([A-Z][a-z]+)(\s[A-Z][a-z]+)+$/;
     return pattern.test(name.trim());
   };
 
-  // Validate department: It should be either "IT" or "Computer Science"
   const validateDepartment = (department) => {
     return department === "IT" || department === "Computer Science";
   };
@@ -44,7 +48,6 @@ export default function LecturerProfile() {
     const { name, value } = e.target;
     setUpdatedData({ ...updatedData, [name]: value });
 
-    // Validate fields dynamically
     if (name === "name" && !validateName(value)) {
       setNameError("Name must have at least two words, each starting with a capital letter.");
     } else {
@@ -59,7 +62,6 @@ export default function LecturerProfile() {
   };
 
   const handleSave = async () => {
-    // Check if name and department are valid before saving
     const isNameValid = validateName(updatedData.name);
     const isDepartmentValid = validateDepartment(updatedData.department);
 
@@ -90,6 +92,45 @@ export default function LecturerProfile() {
       }
     } catch (error) {
       console.error("Update failed", error);
+    }
+  };
+
+  const handlePasswordChange = async () => {
+    setPasswordError("");
+    setPasswordMessage("");
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError("New passwords do not match.");
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setPasswordError("New password must be at least 6 characters.");
+      return;
+    }
+
+    console.log(newPassword)
+    try {
+      const res = await fetch(`http://localhost:3000/users/${userId}/change-password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setPasswordError(data.message || "Password update failed");
+      } else {
+        setPasswordMessage(data.message);
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+      }
+    } catch (error) {
+      setPasswordError("Something went wrong");
     }
   };
 
@@ -162,6 +203,44 @@ export default function LecturerProfile() {
             Edit Profile
           </button>
         )}
+      </div>
+
+      {/* Password Change Section */}
+      <div className="mt-8 border-t pt-6">
+        <h3 className="text-xl font-semibold mb-4">Change Password</h3>
+
+        <div className="space-y-3">
+          <input
+            type="password"
+            placeholder="Current Password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            className="input border p-2 w-full"
+          />
+          <input
+            type="password"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="input border p-2 w-full"
+          />
+          <input
+            type="password"
+            placeholder="Confirm New Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="input border p-2 w-full"
+          />
+          {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+          {passwordMessage && <p className="text-green-600 text-sm">{passwordMessage}</p>}
+
+          <button
+            onClick={handlePasswordChange}
+            className="bg-green-600 text-white px-4 py-2 rounded"
+          >
+            Change Password
+          </button>
+        </div>
       </div>
     </div>
   );

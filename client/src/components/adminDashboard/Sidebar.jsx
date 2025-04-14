@@ -36,6 +36,7 @@ const Sider = ({ isOpen, toggleSidebar }) => {
             { name: 'Dashboard', path: 'adDashboard' },
             { name: 'Registered Students', path: 'students' },
             {name: "Register Lecturers", path: 'registerLecturers'},
+            { name: 'Add Admin', path: 'addAdmin' },
             { name: 'Remove Users', path: 'removeUsers' },
             { name: 'Profile Settings', path: 'adminProfile' },
 

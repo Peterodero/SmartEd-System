@@ -70,7 +70,7 @@ export default function ResetPassword(){
           setLoading(false);
           return;
         }
-        if (formData.otp > 6){
+        if (formData.otp.length > 6 || formData.otp.length<6){
           setMsg("OTP must be of 6 numbers")
           setLoading(false);
           return;
@@ -94,7 +94,7 @@ export default function ResetPassword(){
             throw new Error(data.message || 'Invalid or expired token');
           }
     
-          setMsg('Password updated successfully!');
+          alert('Password updated successfully!');
           localStorage.removeItem('token');
           setTimeout(() => navigate('/signIn'), 2000);
         } catch (err) {
